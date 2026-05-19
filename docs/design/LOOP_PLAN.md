@@ -8,7 +8,7 @@
 
 Order chosen so that downstream documents can reference upstream ones without forward-declared TBDs.
 
-- [ ] **Iter 01 — OG1-CONOPS-001** Concept of Operations (full OV-1/OV-2/OV-5 textual, expanded scenarios, exclusions, success/failure narratives)
+- [x] **Iter 01 — OG1-CONOPS-001** Concept of Operations (full OV-1/OV-2/OV-5 textual, expanded scenarios, exclusions, success/failure narratives) — *realized 2026-05-19*
 - [ ] **Iter 02 — OG1-STRS-001** Stakeholder Requirements (expanded, with stakeholder interviews framed as personas, full needs decomposition)
 - [ ] **Iter 03 — OG1-SRS-001** System Requirements (full FR/NFR/IFR catalog with verification methods, completed traceability)
 - [ ] **Iter 04 — OG1-SAD-001** System Architecture (logical, physical, deployment, runtime; ADR-001…ADR-020+; views per 4+1)

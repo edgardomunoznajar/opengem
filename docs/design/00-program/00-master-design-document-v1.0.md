@@ -37,53 +37,9 @@
 
 ## 1. CONOPS — Concept of Operations (OG1-CONOPS-001)
 
-### 1.1 Mission Statement
-Deliver an open-source, continuously verifiable, multi-country macroeconomic forecasting and scenario system at operational parity (≥70% use-case coverage) with proprietary incumbent systems (Oxford Economics GEM, NIESR NiGEM, Moody's Analytics), at a sustaining cost of <USD 200/month and with statistical performance auditable in public.
+*Realized in [`OG1-CONOPS-001.md`](OG1-CONOPS-001.md) at Revision B (draft). This section is a forward-link stub.*
 
-### 1.2 Operational View (OV-1, textual)
-
-```
-                        +-----------------------+
-   Data Sources  ---->  |  OPENGEM Core System  |  ----> Forecast products
-   (IMF, WB, FRED,      |                       |        Scenario products
-   OECD, ECB, BIS,      |  - Ingestion          |        Backtest leaderboard
-   Comtrade, GDELT,     |  - Estimation         |        MCP endpoints
-   VIIRS, AIS, Trends)  |  - Forecast           |
-                        |  - Scenario           |  ----> Users:
-   Operators       --> |  - Backtest            |        - Researchers
-   (recalibration,      |  - Publication        |        - Asset managers
-    scenario authoring) +-----------------------+        - Policy shops
-                                                         - Journalists
-                                                         - Internal (oblique suite)
-```
-
-### 1.3 Operational Scenarios
-
-| OS-ID | Scenario | Trigger | Outcome |
-|---|---|---|---|
-| OS-01 | Routine daily nowcast | Cron 06:00 UTC | Updated GDP/CPI nowcasts for IOC countries |
-| OS-02 | Monthly re-estimation | First Mon of month | Posterior weights updated, leaderboard refreshed |
-| OS-03 | Quarterly full run | National-accounts release | Full L1+L2+L3 forecast publication |
-| OS-04 | Ad-hoc scenario | Analyst POST /scenario | Fan chart + impulse responses returned <60s |
-| OS-05 | Vintage replay | CI on PR | Backtest reruns over last 10y of vintages |
-| OS-06 | Stress event | Market vol > threshold | Auto-trigger sensitivity sweep, alert subscribers |
-
-### 1.4 Stakeholders
-
-| ID | Stakeholder | Concerns |
-|---|---|---|
-| SH-01 | Forecast consumers (subscribers) | Accuracy, freshness, density forecasts |
-| SH-02 | Open-source community | Reproducibility, license clarity, code quality |
-| SH-03 | Academic auditors | Vintage discipline, methodological transparency |
-| SH-04 | Program owner | Cloud-bill viability, MCP monetization fit |
-| SH-05 | Adjacent oblique systems | API stability for oracle/anvil/plan integration |
-| SH-06 | Regulators (future) | Auditable provenance, model cards |
-
-### 1.5 Out-of-Scope (Block I)
-- Sectoral / industry forecasts (deferred to Block II).
-- Climate-economy coupling à la GCAM (deferred to Block III).
-- Real-time financial market models (FX/equity high-freq) — only quarterly/monthly macro covered.
-- Causal counterfactual analysis beyond shock impulse responses.
+**Summary:** OPENGEM is a multi-country, mixed-frequency, density-producing macroeconomic forecasting and scenario system, composed of three estimation layers (L1 country cores, L2 Bayesian GVAR, L3 DFM+ML) combined via BMA, exposed via REST + MCP, and continuously scored on a public leaderboard against named external benchmarks. The realized CONOPS expands mission, current-situation gap analysis, 10 operational policies, 11 capabilities, 8 modes of operation, 8 user classes, 8 operational scenarios (happy and failure paths), 5 critical success factors, 3 critical failure conditions, and 6 considered-and-rejected alternatives.
 
 ---
 
