@@ -1,0 +1,29 @@
+# Build / runtime artifacts (will appear post-CDR)
+target/
+build/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+.next/
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Data / secrets (will appear post-CDR)
+.env
+.env.*
+secrets/
+data/raw/
+data/vintage/
+*.parquet
+*.sqlite
+
+# Local notes
+SCRATCH.md
+NOTES.md
