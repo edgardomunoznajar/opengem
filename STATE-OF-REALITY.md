@@ -19,8 +19,8 @@ reproducible from a fresh checkout.
 |---|---|---|
 | Python packages (workspace members) | **21** | `uv sync --all-packages` installs all editable |
 | Packages that import cleanly | **20 / 21** | import smoke test; only `opengem-mcp` fails |
-| Test cases passing | **245 / 245** | `pytest` (was 33 *collection errors* before bootstrap) |
-| Test functions (pre-parametrization) | ~225 | `grep "def test_"` census across packages + `tests/` |
+| Test cases passing | **267 / 267** | `pytest` (245 at Goal A baseline; +22 from Goal B's panel + backtest) |
+| Python workspace packages | **23** | 21 at baseline + `opengem-panel` + `opengem-backtest` (Goal B) |
 | Lint | **clean** | `ruff check .` passes (shipped code; research-300 excluded) |
 | CI | **authored + locally validated** | `.github/workflows/ci.yml`; no git remote yet → not run on GitHub |
 
@@ -38,12 +38,51 @@ The green suite is real but **not total coverage**:
   exercised by the suite. "245 green" says nothing about it.
 - `opengem-api` (FastAPI stub) and `opengem-dashboard` (Next.js) have **0 Python
   tests**; they are outside the pytest workspace.
-- All adapter tests use **mocked HTTP** (recorded fixtures / `MockTransport`).
-  **Zero live-data ingestion has ever run.** No real BEA/BLS/FRB/OECD call has
-  been made. Adapters are proven against *assumed* response shapes, not the
-  real upstream APIs.
-- No backtest, no V&V-matrix evaluation, no end-to-end forecast on real data
-  exists yet (those subsystems are unbuilt — see below).
+- The packaged adapter tests use **mocked HTTP**. The *production* BEA/BLS/FRB
+  adapters still have not run against their live upstreams (Goal B sourced real
+  data via FRED discovery instead — see below).
+
+---
+
+## Update — Goal B (2026-06-06): first real, scored forecast
+
+The biggest Goal-A gap ("everything is mocked; no real data has flowed") is now
+**partially closed**. Two new packages turn the stack from *mocked-green* to a
+real, accountable forecast:
+
+- **opengem-panel** — curation slice: vintage observations → dense quarterly
+  panel (yoy transforms). Closes the `fit_us_gdp` wiring gap (it called a
+  nonexistent `store.load_panel`).
+- **opengem-backtest** — CRPS/MAE/PIT metrics, AR(1) + random-walk baselines,
+  rolling-origin replay, leaderboard, CLI.
+
+**First real US forecast** (`scripts/first_us_forecast.py`, real FRED data, 261
+quarters 1960Q2–2026Q1; result in `docs/first-us-forecast.json`):
+
+| | DFM | AR(1) | RW |
+|---|---|---|---|
+| GDP yoy 1Q — mean CRPS | **1.380** ✅ | 1.553 | 1.717 |
+| GDP yoy 1Q — median CRPS (cap-free) | **0.398** ✅ | 0.405 | 0.428 |
+| GDP yoy 1Q — MAE | **1.716** ✅ | 1.743 | 1.918 |
+
+The L3 DFM **beats AR(1) and RW on GDP-1Q by CRPS** — the V&V matrix's headline
+bar — corroborated by the cap-free median. Honest mix elsewhere (AR(1) wins
+CPI-1Q; DFM wins the 4Q horizons on median). Live forecast: **US GDP yoy 2026Q2
+= 2.67% [0.87, 4.47]**, CPI yoy = 2.74% [1.80, 3.69].
+
+**Honest caveats on this result:**
+- **Single-vintage backtest.** Actuals are the latest-vintage values, not the
+  values knowable at each origin. True vintage-correct replay (replaying the
+  store at each origin's own vintage) is the next SSDD-007 step.
+- **SE guard.** A numerical cap (SE ≤ 6× in-sample std) prevents the DFM's EM
+  fit from emitting a non-credible variance at the COVID outlier; without it the
+  mean CRPS is dominated by ~1 blown-up origin. The cap never binds the
+  baselines (their variance is inherently bounded), and the median CRPS needs no
+  cap and agrees — so the win is not a cap artifact.
+- **FRED = discovery only.** Raw data stays in a gitignored local store; the
+  production path is still the (mocked, unrun-live) BEA/BLS/FRB adapters.
+
+This updates the L3 / Backtest rows below from "stub/partial" toward real.
 
 ---
 

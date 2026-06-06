@@ -1,6 +1,6 @@
 # OPENGEM — Open Geopolitical-Economic Modeling
 
-**Status**: Block I — v2.0 baseline accepted (see [SIGNOFF.md](SIGNOFF.md)). **21 Python packages, 245 tests passing, ruff-clean, CI green.** For the honest real-vs-stub breakdown (mocked adapters, unbuilt subsystems, the broken MCP stub), read **[STATE-OF-REALITY.md](STATE-OF-REALITY.md)** — not the per-package counts below, which are approximate.
+**Status**: Block I — v2.0 baseline accepted (see [SIGNOFF.md](SIGNOFF.md)). **23 Python packages, 267 tests passing, ruff-clean, CI green.** First **real, scored** US forecast is live: the L3 DFM beats AR(1) and random-walk on GDP-1Q by CRPS on real 1960–2026 data ([docs/first-us-forecast.json](docs/first-us-forecast.json)). For the honest real-vs-stub breakdown, read **[STATE-OF-REALITY.md](STATE-OF-REALITY.md)** — not the per-package counts below, which are approximate.
 
 ## What this is
 
