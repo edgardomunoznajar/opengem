@@ -33,6 +33,10 @@ if TYPE_CHECKING:
 # A forecaster: (train_panel, target_column, horizons) -> {horizon: {level: value}}
 Forecaster = Callable[["pd.DataFrame", str, Sequence[int]], dict[int, dict[float, float]]]
 
+# Cap DFM forecast SE at this multiple of the in-sample target std (guards against
+# the EM fit returning a non-credible variance at outlier windows, e.g. COVID).
+DFM_SE_CAP_MULT = 6.0
+
 
 @dataclass(frozen=True, slots=True)
 class ScoredForecast:
@@ -60,7 +64,7 @@ def dfm_forecaster(train: pd.DataFrame, target: str, horizons: Sequence[int]) ->
     from opengem_l3_dfm.fit import _last_period, fit_dfm
 
     cfg = DFMConfig(country="US", target=target, factors=1, factor_order=1, horizons_q=tuple(sorted(horizons)))
-    out = fit_dfm(train, cfg, _last_period(train))
+    out = fit_dfm(train, cfg, _last_period(train), max_se_mult=DFM_SE_CAP_MULT)
     return {f.horizon_q: _fq_to_dict(f.quantiles) for f in out}
 
 

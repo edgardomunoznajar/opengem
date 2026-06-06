@@ -1,0 +1,219 @@
+{
+  "generated_at": "2026-06-06T20:24:32.300949+09:30",
+  "vintage_date": "2026-06-06",
+  "panel_quarters": 261,
+  "base_period": "2026Q1",
+  "data_source": "FRED discovery (real US public-domain series)",
+  "headline_gdp_yoy_1Q": {
+    "target": "gdp_yoy",
+    "horizon": "1Q",
+    "crps_dfm": 1.3802,
+    "crps_ar1": 1.5526,
+    "crps_rw": 1.7157,
+    "beats_ar1": true,
+    "beats_rw": true,
+    "n": 24
+  },
+  "targets": [
+    {
+      "target": "gdp_yoy",
+      "n_origins": 24,
+      "leaderboard": [
+        {
+          "model": "opengem_l3_dfm",
+          "indicator": "gdp_yoy",
+          "horizon": "1Q",
+          "horizon_q": 1,
+          "crps": 1.3802,
+          "crps_median": 0.3981,
+          "mae": 1.7159,
+          "hit_rate": 0.833,
+          "pit": 0.625,
+          "n": 24,
+          "rank": 1
+        },
+        {
+          "model": "ar1",
+          "indicator": "gdp_yoy",
+          "horizon": "1Q",
+          "horizon_q": 1,
+          "crps": 1.5526,
+          "crps_median": 0.405,
+          "mae": 1.7432,
+          "hit_rate": 0.792,
+          "pit": 0.625,
+          "n": 24,
+          "rank": 2
+        },
+        {
+          "model": "random_walk",
+          "indicator": "gdp_yoy",
+          "horizon": "1Q",
+          "horizon_q": 1,
+          "crps": 1.7157,
+          "crps_median": 0.4283,
+          "mae": 1.918,
+          "hit_rate": 0.792,
+          "pit": 0.708,
+          "n": 24,
+          "rank": 3
+        },
+        {
+          "model": "ar1",
+          "indicator": "gdp_yoy",
+          "horizon": "4Q",
+          "horizon_q": 4,
+          "crps": 1.7951,
+          "crps_median": 0.6869,
+          "mae": 2.0985,
+          "hit_rate": 0.762,
+          "pit": 0.667,
+          "n": 21,
+          "rank": 1
+        },
+        {
+          "model": "opengem_l3_dfm",
+          "indicator": "gdp_yoy",
+          "horizon": "4Q",
+          "horizon_q": 4,
+          "crps": 1.8223,
+          "crps_median": 0.6598,
+          "mae": 2.0077,
+          "hit_rate": 0.81,
+          "pit": 0.762,
+          "n": 21,
+          "rank": 2
+        },
+        {
+          "model": "random_walk",
+          "indicator": "gdp_yoy",
+          "horizon": "4Q",
+          "horizon_q": 4,
+          "crps": 2.6085,
+          "crps_median": 0.8503,
+          "mae": 3.0224,
+          "hit_rate": 0.762,
+          "pit": 0.667,
+          "n": 21,
+          "rank": 3
+        }
+      ],
+      "final_forecast": [
+        {
+          "horizon": "1Q",
+          "scoring_period": "2026Q2",
+          "p10": 0.873,
+          "p50": 2.672,
+          "p90": 4.472
+        },
+        {
+          "horizon": "4Q",
+          "scoring_period": "2027Q1",
+          "p10": 0.233,
+          "p50": 2.862,
+          "p90": 5.49
+        }
+      ]
+    },
+    {
+      "target": "cpi_yoy",
+      "n_origins": 24,
+      "leaderboard": [
+        {
+          "model": "ar1",
+          "indicator": "cpi_yoy",
+          "horizon": "1Q",
+          "horizon_q": 1,
+          "crps": 0.5464,
+          "crps_median": 0.295,
+          "mae": 0.6967,
+          "hit_rate": 0.708,
+          "pit": 0.542,
+          "n": 24,
+          "rank": 1
+        },
+        {
+          "model": "random_walk",
+          "indicator": "cpi_yoy",
+          "horizon": "1Q",
+          "horizon_q": 1,
+          "crps": 0.5534,
+          "crps_median": 0.2893,
+          "mae": 0.7011,
+          "hit_rate": 0.708,
+          "pit": 0.542,
+          "n": 24,
+          "rank": 2
+        },
+        {
+          "model": "opengem_l3_dfm",
+          "indicator": "cpi_yoy",
+          "horizon": "1Q",
+          "horizon_q": 1,
+          "crps": 0.6155,
+          "crps_median": 0.2972,
+          "mae": 0.6718,
+          "hit_rate": 0.75,
+          "pit": 0.583,
+          "n": 24,
+          "rank": 3
+        },
+        {
+          "model": "opengem_l3_dfm",
+          "indicator": "cpi_yoy",
+          "horizon": "4Q",
+          "horizon_q": 4,
+          "crps": 1.7572,
+          "crps_median": 1.0914,
+          "mae": 2.1628,
+          "hit_rate": 0.571,
+          "pit": 0.524,
+          "n": 21,
+          "rank": 1
+        },
+        {
+          "model": "ar1",
+          "indicator": "cpi_yoy",
+          "horizon": "4Q",
+          "horizon_q": 4,
+          "crps": 1.831,
+          "crps_median": 1.1852,
+          "mae": 2.2535,
+          "hit_rate": 0.476,
+          "pit": 0.429,
+          "n": 21,
+          "rank": 2
+        },
+        {
+          "model": "random_walk",
+          "indicator": "cpi_yoy",
+          "horizon": "4Q",
+          "horizon_q": 4,
+          "crps": 1.9366,
+          "crps_median": 1.5262,
+          "mae": 2.3455,
+          "hit_rate": 0.476,
+          "pit": 0.476,
+          "n": 21,
+          "rank": 3
+        }
+      ],
+      "final_forecast": [
+        {
+          "horizon": "1Q",
+          "scoring_period": "2026Q2",
+          "p10": 1.802,
+          "p50": 2.744,
+          "p90": 3.687
+        },
+        {
+          "horizon": "4Q",
+          "scoring_period": "2027Q1",
+          "p10": 1.074,
+          "p50": 2.856,
+          "p90": 4.639
+        }
+      ]
+    }
+  ]
+}

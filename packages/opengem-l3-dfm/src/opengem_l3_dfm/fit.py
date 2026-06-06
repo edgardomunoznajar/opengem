@@ -71,6 +71,8 @@ def fit_dfm(
     panel: pd.DataFrame,
     cfg: DFMConfig,
     base_period: date,
+    *,
+    max_se_mult: float | None = None,
 ) -> list[DensityForecast]:
     """Fit a DynamicFactorMQ on `panel` and emit one DensityForecast per horizon.
 
@@ -84,6 +86,10 @@ def fit_dfm(
         Declarative config.
     base_period : date
         Last period in the training window (anchor for horizon arithmetic).
+    max_se_mult : float, optional
+        If set, cap each horizon's forecast SE at ``max_se_mult`` times the
+        in-sample std of the target — a guard against non-credible forecast
+        variance from a pathological EM fit. ``None`` (default) leaves SE as-is.
 
     Returns
     -------
@@ -139,6 +145,15 @@ def fit_dfm(
         row_idx = h - 1
         mu = float(mean_path[cfg.target].iloc[row_idx])
         se = float(se_path[cfg.target].iloc[row_idx])
+        # Numerical guard: at some training windows (e.g. the COVID outlier) the
+        # EM fit can return a non-credible forecast variance — a density several
+        # orders of magnitude wider than the series ever moves. Cap the SE at a
+        # multiple of the in-sample target std so one pathological window doesn't
+        # produce a meaningless density. Off by default; opt in for backtests.
+        if max_se_mult is not None:
+            cap = max_se_mult * float(train[cfg.target].std())
+            if cap > 0 and math.isfinite(cap):
+                se = min(se, cap)
         # Forecast period is base_period + h quarters.
         forecast_for = _add_quarters(base_period, h)
         quantiles = _normal_quantiles(mu, se)

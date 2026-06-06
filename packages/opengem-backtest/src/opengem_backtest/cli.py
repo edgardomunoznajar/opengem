@@ -18,11 +18,15 @@ def _print_report(result: RunResult) -> None:
     )
     for tr in result.targets:
         print(f"== {tr.target} ==  (backtest over {tr.n_origins} origins)")
-        print(f"  {'rank':>4} {'model':<16} {'hzn':>4} {'CRPS':>9} {'MAE':>8} {'hit80':>6} {'n':>4}")
+        print(
+            f"  {'rank':>4} {'model':<16} {'hzn':>4} {'CRPS':>8} "
+            f"{'CRPS~med':>9} {'MAE':>8} {'hit80':>6} {'n':>4}"
+        )
         for row in tr.leaderboard:
             print(
                 f"  {row['rank']:>4} {row['model']:<16} {row['horizon']:>4} "
-                f"{row['crps']:>9.4f} {row['mae']:>8.4f} {row['hit_rate']:>6.2f} {row['n']:>4}"
+                f"{row['crps']:>8.3f} {row['crps_median']:>9.4f} "
+                f"{row['mae']:>8.4f} {row['hit_rate']:>6.2f} {row['n']:>4}"
             )
         print("  final forecast (latest vintage):")
         for f in tr.forecasts:

@@ -14,6 +14,7 @@ Rows are ranked by CRPS within each (indicator, horizon).
 
 from __future__ import annotations
 
+import statistics
 from collections.abc import Sequence
 
 from opengem_backtest.replay import ScoredForecast
@@ -33,6 +34,7 @@ def leaderboard_rows(records: Sequence[ScoredForecast], indicator: str) -> list[
     for (model, horizon), recs in groups.items():
         n = len(recs)
         mean_crps = sum(r.crps for r in recs) / n
+        median_crps = statistics.median(r.crps for r in recs)
         mean_mae = sum(r.abs_error for r in recs) / n
         hit80 = sum(1 for r in recs if r.quantiles[0.10] <= r.actual <= r.quantiles[0.90]) / n
         hit50 = sum(1 for r in recs if r.quantiles[0.25] <= r.actual <= r.quantiles[0.75]) / n
@@ -43,6 +45,7 @@ def leaderboard_rows(records: Sequence[ScoredForecast], indicator: str) -> list[
                 "horizon": _horizon_label(horizon),
                 "horizon_q": horizon,
                 "crps": round(mean_crps, 4),
+                "crps_median": round(median_crps, 4),
                 "mae": round(mean_mae, 4),
                 "hit_rate": round(hit80, 3),
                 "pit": round(hit50, 3),

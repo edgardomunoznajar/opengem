@@ -30,6 +30,9 @@ Thumbs.db
 .env
 .env.*
 secrets/
+# Local generated data (raw vintage stores, snapshot .db, discovery pulls).
+# Derived forecast SUMMARIES are committed under docs/ instead.
+/data/
 data/raw/
 data/vintage/
 data/derived/

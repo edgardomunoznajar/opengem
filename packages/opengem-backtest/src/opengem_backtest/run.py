@@ -57,8 +57,10 @@ def _final_forecast(panel: Any, target: str, horizons: tuple[int, ...]) -> list[
     from opengem_l3_dfm import DFMConfig
     from opengem_l3_dfm.fit import _last_period, fit_dfm
 
+    from opengem_backtest.replay import DFM_SE_CAP_MULT
+
     cfg = DFMConfig(country="US", target=target, factors=1, factor_order=1, horizons_q=tuple(sorted(horizons)))
-    return fit_dfm(panel, cfg, _last_period(panel))
+    return fit_dfm(panel, cfg, _last_period(panel), max_se_mult=DFM_SE_CAP_MULT)
 
 
 def run_us_pipeline(
