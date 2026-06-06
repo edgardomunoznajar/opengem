@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from opengem_scenarios import default_library
-
 from opengem_event_detector import (
     Event,
     EventSeverity,
@@ -14,6 +12,7 @@ from opengem_event_detector import (
 )
 from opengem_event_detector.market import MarketSignal
 from opengem_event_detector.news import Headline
+from opengem_scenarios import default_library
 
 
 def test_market_detector_term_spread_inverted() -> None:

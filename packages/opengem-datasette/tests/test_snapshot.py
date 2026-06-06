@@ -7,7 +7,6 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-
 from opengem_datasette import snapshot_to_sqlite, write_metadata
 
 

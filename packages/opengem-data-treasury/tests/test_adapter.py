@@ -4,11 +4,9 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import OutageError, RateLimitError, SchemaError
 from opengem_data_treasury import TreasuryAdapter
+from opengem_types import SeriesId
 
 
 def _paginated_client(pages: list[dict]) -> httpx.Client:

@@ -4,10 +4,8 @@ from collections.abc import Iterator
 from datetime import date
 
 import pytest
-
-from opengem_types import Observation, SeriesId
-
 from opengem_data_base import Adapter, SeriesCatalog
+from opengem_types import Observation, SeriesId
 
 
 class _FakeAdapter(Adapter):

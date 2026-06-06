@@ -4,10 +4,8 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_gpr import GPR_CATALOG, GPR_COUNTRIES, GPRAdapter
+from opengem_types import SeriesId
 
 
 def _client_text(text: str, status: int = 200) -> httpx.Client:

@@ -1,11 +1,9 @@
 from __future__ import annotations
 
 import pytest
-
-from opengem_types import Country
-
 from opengem_scenarios import ScenarioLibrary, default_library
 from opengem_scenarios.library_packs import build_default_packs
+from opengem_types import Country
 
 
 def test_default_library_has_ten_packs() -> None:

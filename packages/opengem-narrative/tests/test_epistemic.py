@@ -4,7 +4,6 @@ and lint_narrative_text catches violations."""
 from __future__ import annotations
 
 import pytest
-
 from opengem_narrative import (
     ANALYST_SEGMENT_SYSTEM_PROMPT_V1,
     EXECUTIVE_SUMMARY_SYSTEM_PROMPT_V1,

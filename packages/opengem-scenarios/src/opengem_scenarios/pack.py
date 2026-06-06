@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from opengem_types import Country, Identification, ScenarioSpec, Shock, ShockType, Variable
+from opengem_types import Country, ScenarioSpec
 
 
 @dataclass(frozen=True, slots=True)

@@ -8,18 +8,15 @@ values.
 
 from __future__ import annotations
 
-import json
 from dataclasses import replace
 from datetime import date, datetime
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId, SeriesMeta
-
 from opengem_data_bea import BEAAdapter
 from opengem_data_bls import BLSAdapter
 from opengem_data_frb import FRBAdapter
+from opengem_types import SeriesId, SeriesMeta
 from opengem_vintage import SQLiteVintageStore
 
 

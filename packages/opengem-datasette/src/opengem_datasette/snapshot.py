@@ -21,10 +21,9 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Iterable, Mapping
 from dataclasses import asdict, is_dataclass
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
-
 
 # Canonical schema. We use the same column order as Datasette renders, so the
 # UI is readable without a custom view.
@@ -225,10 +224,7 @@ def _insert_forecasts(conn: sqlite3.Connection, recs: Iterable[Any]) -> None:
         consensus = d.get("consensus_overlay") or {}
         prov = d.get("provenance") or {}
         badges = d.get("badges") or []
-        if isinstance(badges, (list, tuple)):
-            badges_str = " ".join(badges)
-        else:
-            badges_str = str(badges)
+        badges_str = " ".join(badges) if isinstance(badges, (list, tuple)) else str(badges)
         rows.append((
             d["vintage_id"],
             d["model_id"],
@@ -249,7 +245,7 @@ def _insert_forecasts(conn: sqlite3.Connection, recs: Iterable[Any]) -> None:
             prov.get("git_sha"),
             prov.get("container_digest"),
             prov.get("data_lockfile_hash"),
-            prov.get("generated_at") or datetime.now(timezone.utc).isoformat(),
+            prov.get("generated_at") or datetime.now(UTC).isoformat(),
             d.get("miss_log_url"),
             badges_str,
         ))
@@ -327,7 +323,7 @@ def _insert_meta(
 ) -> None:
     base = {
         "vintage_date": vintage.isoformat(),
-        "snapshot_generated_at": datetime.now(timezone.utc).isoformat(),
+        "snapshot_generated_at": datetime.now(UTC).isoformat(),
         "license_code": "Apache-2.0",
         "license_data": "CC-BY-4.0",
         "attribution": "OPENGEM (opengem.org)",

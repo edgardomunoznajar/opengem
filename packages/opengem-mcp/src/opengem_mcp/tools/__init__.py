@@ -18,7 +18,6 @@ from opengem_mcp.tools import (
     subscribe_events,
 )
 
-
 ALL_TOOLS = {
     "get_forecast": get_forecast,
     "compare_forecasts": compare_forecasts,

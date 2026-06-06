@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pytest
-
 from opengem_data_base import OutageError, RateLimitError, retry
 
 

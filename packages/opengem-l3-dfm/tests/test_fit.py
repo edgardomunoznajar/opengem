@@ -12,14 +12,12 @@ import math
 from datetime import date
 
 import pytest
-
 from opengem_l3_dfm import DFMConfig
 from opengem_l3_dfm.fit import (
     _add_quarters,
     _normal_quantiles,
     _run_id,
 )
-
 
 # ----------------- DFMConfig validation ---------------------------------
 

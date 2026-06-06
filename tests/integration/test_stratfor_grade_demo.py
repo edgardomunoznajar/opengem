@@ -17,13 +17,9 @@ from __future__ import annotations
 import json
 from datetime import date, datetime
 
-import pytest
-
 from opengem_digest import DigestBuilder, SituationSnapshot, render_markdown
 from opengem_event_detector import (
     Event,
-    EventSeverity,
-    EventSource,
     MarketThresholdDetector,
     NewsKeywordDetector,
     RuleEngine,

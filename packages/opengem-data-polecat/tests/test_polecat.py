@@ -6,12 +6,9 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
-from opengem_data_polecat import POLECATAdapter, POLECAT_CATALOG, POLECAT_COUNTRIES
+from opengem_data_polecat import POLECAT_CATALOG, POLECAT_COUNTRIES, POLECATAdapter
 from opengem_data_polecat.adapter import _aggregate, _normalize_iso
-
+from opengem_types import SeriesId
 
 # A minimal POLECAT-shaped TSV fixture.
 _FIXTURE_TSV = """\
@@ -78,7 +75,6 @@ def test_catalog_coverage():
 
 def test_adapter_emits_observations_from_fixture(monkeypatch):
     """End-to-end: install a fixture archive, pull a series, verify Observations."""
-    import opengem_data_polecat.adapter as mod
 
     fixture_bytes = _FIXTURE_TSV.encode("utf-8")
     adapter = POLECATAdapter()

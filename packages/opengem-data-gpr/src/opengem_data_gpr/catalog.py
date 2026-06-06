@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 # Country-specific GPR coverage per Caldara-Iacoviello (44 countries)
 GPR_COUNTRIES: tuple[str, ...] = (

@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_ordra import ORDRA_CATALOG, ordra_series_id
+from opengem_types import SeriesId
 
 
 def test_catalog_has_tier_v_core_gdp() -> None:

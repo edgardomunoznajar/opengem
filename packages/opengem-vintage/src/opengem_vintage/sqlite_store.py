@@ -6,6 +6,7 @@ partitioning. Uses sqlite3 from the stdlib — no extra dependencies.
 
 from __future__ import annotations
 
+import contextlib
 import json
 import sqlite3
 from collections.abc import Iterable, Iterator
@@ -155,10 +156,8 @@ class SQLiteVintageStore(VintageStore):
         return _SQLiteVintageView(self._conn, vintage_at)
 
     def close(self) -> None:
-        try:
+        with contextlib.suppress(sqlite3.ProgrammingError):
             self._conn.close()
-        except sqlite3.ProgrammingError:
-            pass
 
     def __enter__(self) -> SQLiteVintageStore:
         return self

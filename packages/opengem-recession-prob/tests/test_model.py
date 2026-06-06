@@ -4,7 +4,6 @@ import random
 from datetime import date
 
 import pytest
-
 from opengem_recession_prob import (
     BAUER_MERTENS_US_PARAMS,
     TermSpreadModel,

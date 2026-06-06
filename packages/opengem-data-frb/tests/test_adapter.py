@@ -5,12 +5,10 @@ from pathlib import Path
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import OutageError, RateLimitError, SchemaError
 from opengem_data_frb import FRBAdapter
 from opengem_data_frb.adapter import _parse_frb_period
+from opengem_types import SeriesId
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

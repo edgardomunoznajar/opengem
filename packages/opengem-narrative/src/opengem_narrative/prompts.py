@@ -8,7 +8,6 @@ predictive-verb drift.
 
 from __future__ import annotations
 
-
 # Shared epistemic clause — appended to every prompt
 _EPISTEMIC_CLAUSE = """\
 ==== EPISTEMIC CONTRACT (NON-NEGOTIABLE) ====

@@ -1,10 +1,8 @@
 from __future__ import annotations
 
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 
 def test_catalog_basic() -> None:

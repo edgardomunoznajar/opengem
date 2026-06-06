@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from datetime import date
 
-from opengem_types import Country, Variable
-
 from opengem_scenarios import ScenarioInvocation, default_library
+from opengem_types import Country
 
 
 def test_invocation_resolves_to_concrete_spec() -> None:

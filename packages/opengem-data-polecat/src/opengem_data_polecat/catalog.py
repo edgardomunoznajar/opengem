@@ -8,9 +8,8 @@ aggregated unless a specific use case justifies raw event publication).
 
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 # Country coverage — Tier-V + a wider Tier-T set that POLECAT covers in
 # practice. PLOVER's geocoder gives us ~190 countries; OPENGEM publishes

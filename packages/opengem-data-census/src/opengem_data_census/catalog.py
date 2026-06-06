@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 
 def _m3(data_type: str) -> tuple[str, dict[str, str]]:

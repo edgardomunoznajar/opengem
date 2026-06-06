@@ -67,7 +67,7 @@ def _run_id(cfg: DFMConfig, panel_shape: tuple[int, int], lib_version: str) -> s
 
 
 def fit_dfm(
-    panel: "pd.DataFrame",
+    panel: pd.DataFrame,
     cfg: DFMConfig,
     base_period: date,
 ) -> list[DensityForecast]:
@@ -91,8 +91,7 @@ def fit_dfm(
         derived from the predicted mean ± standard error of the target
         column at the appropriate forecast step.
     """
-    pd = _import_pandas()
-    DynamicFactorMQ = _import_dfm_class()
+    DynamicFactorMQ = _import_dfm_class()  # noqa: N806 — class alias, not a variable
     sm_version = _import_statsmodels_version()
 
     if cfg.target not in panel.columns:
@@ -118,8 +117,8 @@ def fit_dfm(
 
     max_horizon = max(cfg.horizons_q)
     f = results.get_forecast(steps=max_horizon)
-    mean_path: "pd.DataFrame" = f.predicted_mean
-    se_path: "pd.DataFrame" = f.se_mean
+    mean_path: pd.DataFrame = f.predicted_mean
+    se_path: pd.DataFrame = f.se_mean
 
     if cfg.target not in mean_path.columns:
         raise RuntimeError(
@@ -231,11 +230,8 @@ def fit_us_gdp(
     return fit_dfm(panel, cfg, base_period)
 
 
-def _last_period(panel: "pd.DataFrame") -> date:
+def _last_period(panel: pd.DataFrame) -> date:
     """Return the last period in the panel as a date."""
     idx = panel.index
-    if hasattr(idx[-1], "to_timestamp"):
-        ts = idx[-1].to_timestamp(how="end")
-    else:
-        ts = idx[-1]
+    ts = idx[-1].to_timestamp(how="end") if hasattr(idx[-1], "to_timestamp") else idx[-1]
     return date(ts.year, ts.month, ts.day if hasattr(ts, "day") else 28)

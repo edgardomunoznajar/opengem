@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 from dataclasses import dataclass
 from datetime import datetime
+from typing import ClassVar
 
 from opengem_event_detector.event import Event, EventSeverity, EventSource
 
@@ -27,7 +28,7 @@ class MarketThresholdDetector:
     - BAA-10y spread > 400bp → credit stress event
     """
 
-    DEFAULT_THRESHOLDS: dict[str, tuple[str, float, EventSeverity, tuple[str, ...]]] = {
+    DEFAULT_THRESHOLDS: ClassVar[dict[str, tuple[str, float, EventSeverity, tuple[str, ...]]]] = {
         "term_spread_10y_3m": ("<", 0.0, EventSeverity.HIGH, ("recession", "yield-curve")),
         "vix": (">", 35.0, EventSeverity.HIGH, ("volatility", "risk-off", "equity")),
         "baa_10y_spread_bp": (">", 400.0, EventSeverity.MEDIUM, ("credit", "risk-off")),

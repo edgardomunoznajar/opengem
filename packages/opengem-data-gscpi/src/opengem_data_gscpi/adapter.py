@@ -9,10 +9,15 @@ from collections.abc import Iterator
 from datetime import date
 
 import httpx
-
+from opengem_data_base import (
+    Adapter,
+    OutageError,
+    RateLimitError,
+    SchemaError,
+    SeriesCatalog,
+    retry,
+)
 from opengem_types import Observation, SeriesId
-
-from opengem_data_base import Adapter, OutageError, RateLimitError, SchemaError, SeriesCatalog, retry
 
 _log = logging.getLogger(__name__)
 

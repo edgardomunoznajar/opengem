@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 from collections.abc import Iterator
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date
 
 from opengem_scenarios import ScenarioInvocation, ScenarioLibrary
-from opengem_scenarios.pack import ScenarioPack
 
 from opengem_event_detector.event import Event, EventSeverity
 

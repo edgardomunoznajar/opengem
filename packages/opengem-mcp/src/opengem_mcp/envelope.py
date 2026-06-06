@@ -7,7 +7,7 @@ ungrounded claim from OPENGEM data.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 
@@ -39,7 +39,7 @@ def envelope(
         ``{"data": payload, "vintage_id": ..., "cite_url": ..., "provenance": {...}}``
     """
     prov = dict(provenance or {})
-    prov.setdefault("generated_at", datetime.now(timezone.utc).isoformat())
+    prov.setdefault("generated_at", datetime.now(UTC).isoformat())
     return {
         "data": payload,
         "vintage_id": vintage_id,

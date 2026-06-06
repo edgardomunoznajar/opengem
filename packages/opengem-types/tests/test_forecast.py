@@ -3,7 +3,6 @@ from __future__ import annotations
 from datetime import date, datetime
 
 import pytest
-
 from opengem_types import (
     Country,
     DensityForecast,

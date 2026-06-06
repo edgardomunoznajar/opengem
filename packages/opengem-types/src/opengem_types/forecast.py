@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import date
+from itertools import pairwise
 
 from opengem_types.country import Country
 from opengem_types.variable import Variable
@@ -21,7 +22,7 @@ class ForecastQuantiles:
 
     def __post_init__(self) -> None:
         qs = [self.p10, self.p25, self.p50, self.p75, self.p90]
-        for a, b in zip(qs, qs[1:], strict=False):
+        for a, b in pairwise(qs):
             if a > b:
                 raise ValueError(f"Quantiles must be monotone non-decreasing, got {qs}")
 

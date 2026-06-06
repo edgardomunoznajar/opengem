@@ -19,7 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 from opengem_datasette.snapshot import snapshot_to_sqlite, write_metadata
@@ -27,7 +27,7 @@ from opengem_datasette.snapshot import snapshot_to_sqlite, write_metadata
 
 def _parse_vintage(arg: str) -> date:
     if arg == "today":
-        return datetime.now(timezone.utc).date()
+        return datetime.now(UTC).date()
     return date.fromisoformat(arg)
 
 
@@ -96,7 +96,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.vintage == "demo":
         observations, forecasts, scenarios, misses = _load_demo_fixtures()
-        vintage = datetime.now(timezone.utc).date()
+        vintage = datetime.now(UTC).date()
     else:
         vintage = _parse_vintage(args.vintage)
         try:

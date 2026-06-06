@@ -6,9 +6,8 @@ programmatically from a Tier-V country roster × MEI subject codes.
 
 from __future__ import annotations
 
-from opengem_types import Country, SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import Country, SeriesId
 
 # ORDRA MEI subject codes per OECD documentation
 MEI_SUBJECTS: dict[str, tuple[str, str]] = {

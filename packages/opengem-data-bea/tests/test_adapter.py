@@ -6,12 +6,10 @@ from pathlib import Path
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import AuthError, OutageError, RateLimitError, SchemaError
 from opengem_data_bea import BEAAdapter
 from opengem_data_bea.adapter import _parse_bea_period, _parse_value
+from opengem_types import SeriesId
 
 FIXTURES = Path(__file__).parent / "fixtures"
 

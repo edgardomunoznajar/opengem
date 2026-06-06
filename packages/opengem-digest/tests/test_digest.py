@@ -3,9 +3,8 @@ from __future__ import annotations
 import json
 from datetime import date
 
+from opengem_digest import DigestBuilder, SituationSnapshot, render_markdown
 from opengem_scenarios import ScenarioInvocation, default_library
-
-from opengem_digest import Digest, DigestBuilder, SituationSnapshot, render_markdown
 
 
 def test_digest_build_basic() -> None:

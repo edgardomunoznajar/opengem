@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 # BIS Central Bank Policy Rates — coverage per R07 §2.3
 BIS_CBPOL_COUNTRIES: tuple[str, ...] = (

@@ -13,5 +13,5 @@ Public API:
 from opengem_data_polecat.adapter import POLECATAdapter
 from opengem_data_polecat.catalog import POLECAT_CATALOG, POLECAT_COUNTRIES
 
-__all__ = ["POLECATAdapter", "POLECAT_CATALOG", "POLECAT_COUNTRIES"]
+__all__ = ["POLECAT_CATALOG", "POLECAT_COUNTRIES", "POLECATAdapter"]
 __version__ = "0.1.0"

@@ -32,7 +32,7 @@ class HttpAPIClient:
         self._timeout = timeout
         self._client = httpx.Client(timeout=timeout)
 
-    def __enter__(self) -> "HttpAPIClient":
+    def __enter__(self) -> HttpAPIClient:
         return self
 
     def __exit__(self, *_: object) -> None:

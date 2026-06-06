@@ -11,10 +11,9 @@ from collections.abc import Iterator
 from datetime import date
 
 import httpx
-
+from opengem_data_base import Adapter, OutageError, RateLimitError, SchemaError, retry
 from opengem_types import Observation, SeriesId
 
-from opengem_data_base import Adapter, OutageError, RateLimitError, SchemaError, retry
 from opengem_data_ordra.catalog import ORDRA_CATALOG
 
 _log = logging.getLogger(__name__)

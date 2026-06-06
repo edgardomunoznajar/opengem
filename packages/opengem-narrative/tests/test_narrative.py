@@ -4,16 +4,13 @@ import json
 from datetime import date
 
 import pytest
-
 from opengem_digest import DigestBuilder, SituationSnapshot
-from opengem_scenarios import ScenarioInvocation, default_library
-
 from opengem_narrative import (
     NarrativeOutput,
-    NarrativeRequest,
     build_narrative_request,
     get_system_prompt,
 )
+from opengem_scenarios import ScenarioInvocation, default_library
 
 
 def test_system_prompts_known() -> None:

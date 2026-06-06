@@ -10,6 +10,6 @@ def _no_sleep(monkeypatch: pytest.MonkeyPatch) -> None:
     """Disable retry sleeps in tests so 4-attempt backoffs are instant."""
     retry_mod = sys.modules.get("opengem_data_base.retry")
     if retry_mod is None:
-        import opengem_data_base.retry as retry_mod  # noqa: PLC0415
+        import opengem_data_base.retry as retry_mod
     monkeypatch.setattr(retry_mod.time, "sleep", lambda _s: None)
     monkeypatch.setattr(retry_mod.random, "uniform", lambda _a, _b: 0.0)

@@ -47,10 +47,25 @@ opengem-mcp = { workspace = true }
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+# research-300/ is research scratch (300 loops of prototypes + external repo
+# clones), not a workspace member and not installed or tested. Lint only the
+# shipped code: the 21 packaged members + the integration tests.
+extend-exclude = ["research-300", "packages/opengem-dashboard", "packages/opengem-api"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
-ignore = ["E501"]  # handled by formatter
+ignore = [
+    "E501",            # line length — handled by formatter
+    "RUF001",          # ambiguous unicode in strings — OPENGEM uses → and — deliberately
+    "RUF002",          # ambiguous unicode in docstrings — same
+    "RUF003",          # ambiguous unicode in comments — same
+    "UP046",           # Generic[T] is fine; PEP-695 syntax not required on core types
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests legitimately encode tokens in names (test_..._with_M), assert broad
+# frozen/immutability errors, and build throwaway collections.
+"**/tests/**" = ["N802", "B017", "B018", "F841", "RUF005", "RUF043"]
 
 [tool.mypy]
 python_version = "3.12"

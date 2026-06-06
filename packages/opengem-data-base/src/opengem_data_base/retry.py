@@ -45,7 +45,7 @@ def retry(
                         delay = min(e.retry_after_seconds, max_delay)
                     else:
                         delay = min(base_delay * (2 ** (attempt - 1)), max_delay)
-                    delay = delay + random.uniform(0, jitter)  # noqa: S311 (not crypto)
+                    delay = delay + random.uniform(0, jitter)
                     _log.warning(
                         "retry: %s attempt %d/%d after %.2fs (%s)",
                         fn.__name__,

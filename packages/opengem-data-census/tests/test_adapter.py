@@ -4,12 +4,10 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import OutageError, RateLimitError, SchemaError
 from opengem_data_census import CensusAdapter
 from opengem_data_census.adapter import _parse_census_period
+from opengem_types import SeriesId
 
 
 def _client(payload: list, status: int = 200) -> httpx.Client:

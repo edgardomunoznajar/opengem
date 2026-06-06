@@ -3,9 +3,7 @@ from __future__ import annotations
 from datetime import date, datetime
 
 import pytest
-
 from opengem_types import Observation, SeriesId, SeriesMeta
-
 from opengem_vintage import SQLiteVintageStore
 
 

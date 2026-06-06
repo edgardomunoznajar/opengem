@@ -4,12 +4,10 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import OutageError
 from opengem_data_gscpi import GSCPIAdapter
 from opengem_data_gscpi.adapter import GSCPI_SERIES_ID
+from opengem_types import SeriesId
 
 
 def _client_text(text: str, status: int = 200) -> httpx.Client:

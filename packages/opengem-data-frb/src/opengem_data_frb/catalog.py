@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 
 def _frb(release: str, series: str, freq: str = "D") -> tuple[str, dict[str, str]]:

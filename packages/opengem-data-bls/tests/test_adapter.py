@@ -4,12 +4,10 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import AuthError, OutageError, RateLimitError, SchemaError
 from opengem_data_bls import BLSAdapter
 from opengem_data_bls.adapter import _parse_bls_period
+from opengem_types import SeriesId
 
 
 def _client_returning(payload: dict, status: int = 200) -> httpx.Client:

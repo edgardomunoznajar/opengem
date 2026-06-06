@@ -7,9 +7,8 @@ optional `Frequency` override.
 
 from __future__ import annotations
 
-from opengem_types import SeriesId
-
 from opengem_data_base import SeriesCatalog
+from opengem_types import SeriesId
 
 
 def _bea(dataset: str, table: str, line: int, freq: str = "Q") -> tuple[str, dict[str, str]]:

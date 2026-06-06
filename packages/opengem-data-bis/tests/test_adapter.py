@@ -4,12 +4,10 @@ from datetime import date
 
 import httpx
 import pytest
-
-from opengem_types import SeriesId
-
 from opengem_data_base import OutageError, RateLimitError, SchemaError
 from opengem_data_bis import BIS_CATALOG, BIS_CBPOL_COUNTRIES, BISAdapter
 from opengem_data_bis.adapter import _parse_bis_period
+from opengem_types import SeriesId
 
 
 def _client(payload: dict, status: int = 200) -> httpx.Client:

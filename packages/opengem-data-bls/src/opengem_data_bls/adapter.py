@@ -8,10 +8,9 @@ from collections.abc import Iterator
 from datetime import date
 
 import httpx
-
+from opengem_data_base import Adapter, AuthError, OutageError, RateLimitError, SchemaError, retry
 from opengem_types import Observation, SeriesId
 
-from opengem_data_base import Adapter, AuthError, OutageError, RateLimitError, SchemaError, retry
 from opengem_data_bls.catalog import BLS_CATALOG
 
 _log = logging.getLogger(__name__)

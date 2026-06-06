@@ -9,10 +9,9 @@ from collections.abc import Iterator
 from datetime import date
 
 import httpx
-
+from opengem_data_base import Adapter, OutageError, RateLimitError, SchemaError, retry
 from opengem_types import Observation, SeriesId
 
-from opengem_data_base import Adapter, OutageError, RateLimitError, SchemaError, retry
 from opengem_data_gpr.catalog import GPR_CATALOG
 
 _log = logging.getLogger(__name__)
@@ -94,7 +93,7 @@ def _parse_date(s: str) -> date:
     if "/" in s:
         parts = s.split("/")
         if len(parts) == 3:
-            m, d, y = parts
+            m, _d, y = parts
             return date(int(y), int(m), 1)
     raise ValueError(f"unrecognized GPR period: {s}")
 
