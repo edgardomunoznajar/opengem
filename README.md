@@ -1,6 +1,6 @@
 # OPENGEM — Open Geopolitical-Economic Modeling
 
-**Status**: Block I development — 17 packages, **183 tests passing**, end-to-end Stratfor-grade demo green.
+**Status**: Block I — v2.0 baseline accepted (see [SIGNOFF.md](SIGNOFF.md)). **21 Python packages, 245 tests passing, ruff-clean, CI green.** For the honest real-vs-stub breakdown (mocked adapters, unbuilt subsystems, the broken MCP stub), read **[STATE-OF-REALITY.md](STATE-OF-REALITY.md)** — not the per-package counts below, which are approximate.
 
 ## What this is
 
@@ -51,7 +51,7 @@ Every package is **independently publishable**. Clean contracts at boundaries
 ### Integration tests
 - **tests/integration/** ✅ — vertical slice + Stratfor-grade end-to-end demo — 5 tests
 
-**Total: 17 packages, 183 tests, all green.**
+**Total (verified 2026-06-06): 21 Python packages, 245 tests, all green** (+ l3-dfm, datasette, mcp [stub], data-polecat, and the dashboard/api surfaces not listed above). Per-package counts in this section are approximate and predate the last build — see [STATE-OF-REALITY.md](STATE-OF-REALITY.md) for measured values.**
 
 ## The friend's morning workflow
 
@@ -104,13 +104,14 @@ on a morning of high geopolitical tension.
 ## Running the test suite
 
 ```bash
-PYTHONPATH=$(find packages -name src -printf '%p:' | sed 's/:$//') \
-  python3 -m pytest packages/ tests/
+uv sync --all-packages   # install all workspace members editable + dev tools
+uv run ruff check .      # lint
+uv run pytest            # 245 tests, incl. the statsmodels DFM integration fit
 ```
 
 ## Design dossier
 
-The pre-PDR research round produced 28 memos + CONOPS rev C + master design doc v2.0 + LOOP_PLAN v2 — all in `docs/`. Start with [MORNING-BRIEFING.md](MORNING-BRIEFING.md).
+The pre-PDR research round produced 28 memos + CONOPS rev C + master design doc v2.0 + LOOP_PLAN v2 — all in `docs/`. As of 2026-06-06 the rebaseline is **accepted** ([SIGNOFF.md](SIGNOFF.md)): the rev C CONOPS, master-doc v2.0, and LOOP_PLAN v2 are promoted to baseline (rev B / v1 remain in git history). Start with [MORNING-BRIEFING.md](MORNING-BRIEFING.md).
 
 ## License
 

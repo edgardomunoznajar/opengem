@@ -1,91 +1,113 @@
-# OG1-CONOPS-001 — Concept of Operations
+# OG1-CONOPS-001 — Concept of Operations (Rev C — DRAFT)
+
 ## Open Global Economic Macroeconometric (OPENGEM) Forecasting System
 
 | Field | Value |
 |---|---|
 | Document ID | OG1-CONOPS-001 |
-| Revision | B (draft) |
-| Date | 2026-05-19 |
+| Revision | **C (draft, post-pre-PDR research round)** |
+| Date | 2026-05-24 |
 | Lifecycle Phase | Concept |
-| Supersedes | §1 of `00-master-design-document-v1.0.md` |
-| Format Reference | IEEE Std 1362-1998 (System Definition — CONOPS) |
+| Supersedes | rev B (`OG1-CONOPS-001.md`) following R99 synthesis |
+| Format Reference | IEEE Std 1362-1998 |
+| Authority for changes | R99-synthesis.md §3, R01–R06 |
 
 ---
 
 ## 1. Scope
 
 ### 1.1 Identification
-This document defines the Concept of Operations for **Program OPENGEM-1**, Block I, the open-source Open Global Economic Macroeconometric Forecasting System (henceforth **OPENGEM** or "the system").
+
+This document defines the Concept of Operations for **Program OPENGEM-1**, Block I, the open-source Open Global Economic Macroeconometric Forecasting System. Rev C supersedes rev B following a pre-PDR research round (R01–R06) that pressure-tested the load-bearing assumptions of the prior architecture.
 
 ### 1.2 System Overview
-OPENGEM is a multi-country, mixed-frequency, density-producing macroeconomic forecasting and scenario system. It composes three estimation layers (semi-structural country cores, Bayesian Global VAR, and Dynamic Factor Model with ML residual correction) into a single Bayesian-Model-Averaged forecast distribution per country-variable-horizon cell. Outputs are published via REST and MCP interfaces, archived for accountability audit, and continuously benchmarked against named external forecasts on a public leaderboard.
+
+OPENGEM is a personal-use, open-source, **OECD-26-vintage-correct** macroeconomic forecasting and situation-awareness system for ~25 economies, with a tracked-only panel for the rest. It produces density forecasts via an L3-centered architecture (Dynamic Factor Model + machine-learning residual + large Bayesian VAR variants, combined via Bayesian Model Averaging). Spillover scenarios are produced on demand by a Bayesian Global VAR (L2). A US-only semi-structural core (L1) provides structural shock identification and narrative for scenarios. A separate Situation Subsystem publishes term-spread recession probabilities and (deferred) geopolitical-risk nowcasts. The system is continuously benchmarked on a public leaderboard against AR(1), random walk, IMF WEO, OECD EO, and forward-curve benchmarks per a variable×horizon evaluation matrix.
 
 ### 1.3 Document Overview
-This CONOPS establishes the *why*, *for whom*, *under what conditions*, and *to what end* of OPENGEM Block I. It precedes and constrains all downstream artifacts (StRS, SRS, SAD, SSDDs, ICDs). Approval of this document at SRR baselines the **Functional Configuration** of the program.
+
+This CONOPS establishes the *why*, *for whom*, *under what conditions*, and *to what end* of OPENGEM Block I after the rev B rebaseline. Approval of rev C baselines the **Functional Configuration** of the program for the restarted LOOP_PLAN.
 
 ---
 
 ## 2. Referenced Documents
 
+Carried forward from rev B plus additions from R01–R06.
+
 | Ref | Title |
 |---|---|
 | R-01 | Pesaran, Schuermann, Weiner (2004). *Modeling Regional Interdependencies Using a Global Error-Correcting Macroeconometric Model.* |
-| R-02 | Banbura, Giannone, Reichlin (2010). *Nowcasting.* ECB WP. |
-| R-03 | IMF (2018). *FPAS Mark II — Quarterly Projection Model documentation.* |
-| R-04 | NIESR. *NiGEM model reference manual.* (paywall — used only conceptually) |
+| R-02 | Banbura, Giannone, Reichlin (2010). *Large Bayesian VARs.* |
+| R-03 | IMF FPAS Mark II QPM documentation. |
+| R-04 | Faust & Wright (2013). *Forecasting Inflation.* Handbook of Economic Forecasting. |
 | R-05 | Diebold & Mariano (1995). *Comparing predictive accuracy.* |
 | R-06 | Hansen, Lunde, Nason (2011). *Model Confidence Set.* |
-| R-07 | Philadelphia Fed. *Real-Time Data Set for Macroeconomists.* |
-| R-08 | Makridakis et al. *M5/M6 competition reports.* |
-| R-09 | IEEE Std 1362-1998. *Guide for Information Technology — System Definition — Concept of Operations Document.* |
-| R-10 | MIL-STD-498 (1994). *Software Development and Documentation.* |
+| R-07 | Croushore & Stark (2001). *A real-time data set for macroeconomists.* JoE. |
+| R-08 | Rossi & Sekhposyan (2014). *Evaluating predictive densities.* IJF. |
+| R-09 | D'Agostino, Gambetti, Giannone (2013). *Macroeconomic forecasting and structural change.* JoAE. |
+| R-10 | Goulet Coulombe (2024). *The Macroeconomy as a Random Forest.* JoAE. |
+| R-11 | Boeck, Feldkircher, Huber (2022). *BGVAR: Bayesian Global VARs with Shrinkage Priors in R.* JSS 104(9). |
+| R-12 | Koop & Korobilis. *Variational Bayesian inference in large VARs with hierarchical shrinkage.* IJF 2021. |
+| R-13 | Bauer & Mertens (2018). *Economic Forecasts with the Yield Curve.* FRBSF Economic Letter / Annual Review of Financial Economics. |
+| R-14 | Benigno, Di Giovanni, Groen, Noble (NY Fed SR1017). *The GSCPI: A New Barometer of Global Supply Chain Pressures.* |
+| R-15 | Caldara & Iacoviello (2022). *Measuring Geopolitical Risk.* FRB IFDP 1222. |
+| R-16 | Bybee, Kelly, Manela, Xiu (2024). *Business News and Business Cycles.* Journal of Finance. |
+| R-17 | Fernandez, Koenig, Nikolsko-Rzhevskyy (2011). *A Real-Time Historical Database for the OECD.* Dallas Fed WP 96. |
+| R-18 | IEEE Std 1362-1998. *CONOPS Guide.* |
+| R-19 | MIL-STD-498 (1994). *Software Development and Documentation.* |
 
 ---
 
 ## 3. Current Situation
 
-### 3.1 Incumbent Systems
-The world economy is currently forecast operationally by a small cartel of proprietary models:
+### 3.1 Incumbent Systems (unchanged from rev B)
 
-| System | Operator | Coverage | License Cost | Open Source |
-|---|---|---|---|---|
-| Global Economic Model (GEM) | Oxford Economics | ~80 countries, ~200 light | USD 50–250k/yr | No |
-| NiGEM | NIESR | ~80 countries | USD ~80–150k/yr | No (licensable) |
-| Moody's Analytics Global | Moody's | ~80 countries | USD 100k+/yr | No |
-| FRB/US | Federal Reserve | US only | Free | Code public, US-only |
-| IMF GIMF | IMF | ~6 regions | Free | DSGE, narrow scope |
-| EAGLE | ECB | 4 regions | Free (Dynare) | Narrow scope |
-| GVAR Toolbox | Pesaran et al. | ~33 countries | Free (Matlab) | Yes, reduced-form |
-| BGVAR (R) | M. Böck | configurable | Free (CRAN) | Yes |
+Proprietary multi-country macroeconometric systems remain dominated by Oxford Economics GEM, NIESR NiGEM, Moody's Analytics Global. Open alternatives (FRB/US, EAGLE, GVAR Toolbox, BGVAR R package) are research artifacts without operational pipelines, leaderboards, or MCP surfaces.
 
-### 3.2 Diagnosed Gap
-- No system combines (a) **open license**, (b) **multi-country breadth**, (c) **structural + reduced-form + ML hybrid**, (d) **vintage-correct continuous backtests**, and (e) **public leaderboard against named benchmarks**.
-- Even where open models exist (GVAR, BGVAR, EAGLE, FRB/US), they ship as research artifacts. They are not *operated* — there is no daily pipeline, no leaderboard, no MCP/REST surface, no model cards, and rarely real-time vintage discipline.
-- The verifiability gap is the central pathology: forecasts are routinely published without subsequent public scoring, so consumers cannot tell which models earn their cost.
+### 3.2 Diagnosed Gap (updated)
 
-### 3.3 Stakeholder Pain (current)
-| Pain Point | Affected Stakeholder | Cost |
-|---|---|---|
-| Cannot afford GEM/NiGEM for small shops | Independent analysts, journalists, small funds | Forced to use point estimates from headlines |
-| Cannot independently audit consensus accuracy | Academics, regulators | Reliance on self-reporting |
-| Cannot run custom scenarios outside subscription | Same | Either pay or improvise |
-| Cannot integrate into agentic tooling | Internal oblique suite | No MCP surface from any incumbent |
+The gap as stated in rev B remains real, but its *resolution* is bounded by **data availability** (R02): there is no public real-time vintage archive for most non-OECD economies. Therefore the "open global" framing of rev B is aspirational past the OECD-26 perimeter.
+
+The gap OPENGEM Block I actually closes is:
+
+- An **operational, continuously-verified, vintage-correct forecasting + scenario + situation-awareness system** for the OECD-26, with density forecasts, multiple horizons, MCP integration, and a public leaderboard — none of which the open alternatives offer in combination.
+
+The "global" ambition is preserved as a Block II/III goal contingent on emerging-market self-archive maturation.
+
+### 3.3 Stakeholder Pain (private-use scope)
+
+Single stakeholder: the program owner (personal use). Pain points:
+
+| Pain | Cost today |
+|---|---|
+| No personally-owned multi-country density forecast | Reliance on headline-level consensus / news |
+| Cannot run custom scenarios with structural identification | Subscription cost or improvise |
+| Cannot integrate forecasts into oblique-suite agentic tooling | No MCP surface from any incumbent |
+| No vintage-corrected backtest of any forecast I'd want to trust | Forecasts are unfalsifiable |
 
 ---
 
-## 4. Justification for the System
+## 4. Justification
 
 ### 4.1 Necessity
-The intersection of cheap cloud compute, public macro datasets, mature Bayesian inference libraries, and the MCP standard makes a guerrilla-developer-scale clone of GEM technically feasible for the first time. Without OPENGEM, the open-source community lacks a credible answer to "what does the world economy look like in 2027 under shock X, and how do I know your answer is right?"
 
-### 4.2 Strategic Fit (within the oblique suite)
-- **oblique-oracle** already provides Monte Carlo simulation primitives; OPENGEM consumes those for parameter-uncertainty propagation.
-- **oblique-anvil** generates stress scenarios; OPENGEM consumes shock specifications.
-- **oblique-plan** turns OPENGEM scenario outputs into decision trees.
-- **oblique-lawyer**'s MCP monetization template at v0.5 is the playbook for OPENGEM's commercial surface.
+Same as rev B but reframed for private-use scope: cheap cloud + mature Bayesian libraries + free public data + MCP standard now make a personal-scale OECD-26 forecasting system feasible. OPENGEM is the missing piece in the oblique suite's economic-reasoning chain.
+
+### 4.2 Strategic Fit within the oblique suite
+
+| oblique-* | Role with OPENGEM |
+|---|---|
+| oblique-oracle | Consumes OPENGEM forecasts as priors for Monte Carlo simulation |
+| oblique-anvil | Generates stress shocks; OPENGEM consumes shock specs via Scenario subsystem |
+| oblique-plan | Turns OPENGEM scenarios into decision trees |
+| oblique-lawyer | Independent — no direct dependency |
+| oblique-thinker | Independent |
+| oblique-seer | OPENGEM dashboard styled via seer-derived patterns (later) |
+| oblique-weaver | Used to consistency-check forecast cards vs. data layer |
 
 ### 4.3 Commercial Rationale
-While the core is Apache-2.0, the **MCP server** is the monetization vector: pay tiers gate scenario authoring, custom benchmarks, and bulk historical forecast exports. Open-core / commercial-API split is the dominant viable model for this class of artifact.
+
+**Deferred.** Rev B contained a monetization narrative; rev C marks it deferred per program-owner direction 2026-05-24. The MCP-compatible interface is built for *personal-agentic* use first; monetization re-evaluation in a future public-launch review.
 
 ---
 
@@ -93,292 +115,296 @@ While the core is Apache-2.0, the **MCP server** is the monetization vector: pay
 
 ### 5.1 Background, Objectives, and Scope
 
-#### 5.1.1 Objectives (ranked)
-1. **Verifiability.** Every forecast carries a provenance hash; every forecast is publicly scored on a leaderboard within 4Q of issue.
-2. **Coverage.** ≥40 economies at IOC, ≥80 at FOC, all with density forecasts.
-3. **Interpretability + Accuracy.** Both, not either — that's the rationale for the 3-layer hybrid.
-4. **Cost discipline.** Sustaining operation ≤ USD 200/mo.
-5. **Integration.** First-class MCP citizen of the oblique suite.
+#### 5.1.1 Objectives (re-ranked per R99)
 
-#### 5.1.2 Scope (Block I)
-*In scope:* macro variables (GDP, CPI, policy rate, unemployment, FX), quarterly modeling, monthly nowcasting, scenario impulse responses, public leaderboard.
-*Out of scope:* sectoral/industry detail (Block II), climate/energy coupling (Block III), HF financial markets, causal counterfactuals beyond shock IRFs.
+1. **Verifiability** for Tier-V countries: every forecast has provenance, is scored on the leaderboard within 4Q.
+2. **Coverage tiered**: Tier-V (vintage-correct, ~25 countries) + Tier-T (tracked-only, ~50+ countries).
+3. **Interpretability + Accuracy**: L3 carries accuracy; L1 (US) and L2 carry interpretability.
+4. **Cost discipline** (informational; no longer a hard gate).
+5. **Integration**: first-class MCP citizen of the oblique suite.
+
+#### 5.1.2 Scope (Block I, post-rebaseline)
+
+**In scope:**
+- Density forecasts for **Tier-V countries** at horizons {1Q, 4Q, 8Q, 20Q} for: GDP (real, nominal), CPI (headline, core), policy rate (decision-record + curve-implied path), unemployment rate.
+- Monthly L3 nowcast refresh for Tier-V; daily nowcast where high-frequency covariates exist.
+- Ad-hoc scenario IRFs (L2 propagation, L1 identification when origin = US).
+- Public leaderboard for Tier-V vs. AR(1), RW, WEO, OECD EO benchmarks.
+- **Wider information surface (R06): D-MKT, D-SCN, D-GEO, D-MED** as L3 covariates.
+- **Situation Subsystem**: term-spread recession probability (Tier-V); GPR nowcast endpoint (deferred build).
+- Tracked-only dashboard for Tier-T countries (no leaderboard inclusion).
+- MCP server with tools for forecast/scenario/recession-probability/situation.
+
+**Out of scope (Block II/III):**
+- Sectoral / industry detail.
+- Climate / energy coupling beyond GSCPI-style aggregates.
+- Tier-T leaderboard inclusion before self-archive matures (~2028+).
+- High-frequency financial markets forecasting (beyond term-spread).
+- Custom topic model for media (use GDELT GKG tone at IOC; defer Bybee-style topic model to v0.4+).
+
+#### 5.1.3 Tier-V country roster (initial; finalize at SRR)
+
+Derived from R02 §3 best-case tier:
+**Tier-V (≥4 variables, ≥10 years vintage, BIS policy rates):**
+US, CA, UK, DE, FR, IT, ES, NL, BE, AT, LU, IE, GR, PT, FI, SE, DK, NO, CH, JP, KR, AU, NZ, MX, IS (~25 countries).
+**Conditionally Tier-V** (subject to ORDRA roster confirmation): TR, CL, CZ, HU, PL, SK, SI, EE.
+**Tier-T (tracked-only, no leaderboard):** RU, CN, IN, BR, ID, ZA, SA, AE, EG, NG, VN, TH, PH, MY, AR, CO, PE, others as bandwidth allows.
 
 ### 5.2 Operational Policies and Constraints
 
-| Policy-ID | Statement |
-|---|---|
-| POL-01 | All data sources used in OPENGEM shall be either public-domain or licensed for free redistribution. Sources requiring per-user authentication shall be wrapped to expose only derivative aggregates. |
-| POL-02 | Every published forecast shall be reproducible from `(code_sha, vintage_hash, prior_hash, posterior_hash)`. |
-| POL-03 | Backtests shall use real-time (vintage) data. Backtests using revised data are categorically prohibited from the leaderboard. |
-| POL-04 | Forecasts shall never be silently retracted. Corrections produce a *new* run; the prior run remains archived with a `superseded_by` pointer. |
-| POL-05 | Model cards shall accompany every release; every model card lists known biases, training period, and last-validated date. |
-| POL-06 | GPU usage shall be ephemeral and bursty; no GPU shall remain provisioned outside re-estimation windows. |
-| POL-07 | No PII shall enter the system at any layer. |
-| POL-08 | All schemas and ICDs are open; private extensions are forbidden. |
-| POL-09 | The leaderboard ranking algorithm shall itself be open and version-pinned per leaderboard epoch. |
-| POL-10 | "Beat consensus" claims require Diebold-Mariano p<0.05 evidence over ≥8 quarters of vintage-correct out-of-sample data. Lesser claims must be hedged. |
+| Policy-ID | Statement | Change vs. rev B |
+|---|---|---|
+| POL-01 | All ingestion is from public or programmatic-access-permitted sources. **OPENGEM does not redistribute or cache FRED Content; FRED is used for series discovery only. Upstream agencies (BEA/BLS/FRB/Treasury/Census/Eurostat/...) are the persistent source of truth.** | Reworded for FRED 2024 ToS |
+| POL-02 | Every published forecast reproducible from `(code_sha, vintage_hash, prior_hash, posterior_hash)`. | Unchanged |
+| POL-03 | **Tier-V leaderboard uses real-time (vintage) data only.** Tier-T tracked panel uses latest-revised, clearly labelled. | New tier semantics |
+| POL-04 | Forecasts are never silently retracted. | Unchanged |
+| POL-05 | Model cards accompany every release. | Unchanged |
+| POL-06 | GPU usage is ephemeral. | Unchanged |
+| POL-07 | No PII. | Unchanged |
+| POL-08 | All schemas and ICDs are open. | Unchanged |
+| POL-09 | Leaderboard ranking algorithm is open and version-pinned. | Unchanged |
+| POL-10 | "Beat WEO/OECD EO" claims require Diebold-Mariano p<0.05 over ≥8 quarters of vintage-correct out-of-sample data. **Consensus Economics benchmark deferred** until access path resolves. | Substituted WEO/OECD EO for consensus |
+| **POL-11 (new)** | **Tier-T countries are tracked-only and explicitly excluded from leaderboard claims**, regardless of how well OPENGEM appears to do on revised-data backtests for them. |  |
 
 ### 5.3 Description of the Proposed System
 
-#### 5.3.1 System-Level Block Diagram (textual)
+#### 5.3.1 System-Level Block Diagram (revised)
 
 ```
-   ┌────────────────────── External Data Sources ──────────────────────┐
-   │ IMF IFS · WB WDI · OECD MEI · FRED · ECB SDW · BIS · UN Comtrade │
-   │ + GDELT · VIIRS · AIS · Google Trends · electricity grids       │
-   └───────────────────────────────┬───────────────────────────────────┘
-                                   │ HTTPS pulls (POL-01)
-                                   ▼
-   ┌─────────────────── Ingestion + Vintage Store ─────────────────────┐
-   │  Source adapters → Validators → Vintage Hasher → PostgreSQL/TS   │
-   └───────────────────────────────┬───────────────────────────────────┘
-                                   ▼
-   ┌──────────────────── Curation + Feature Layer ─────────────────────┐
-   │  Frequency harmonization · Seasonal adj · Trade-weight builder   │
-   └─────────┬────────────────┬────────────────────────┬───────────────┘
-             ▼                ▼                        ▼
-   ┌──────── L1 ────────┐  ┌── L2 ──┐         ┌─────── L3 ─────────┐
-   │ Country cores     │  │ GVAR  │         │ DFM + ML residual  │
-   │ (semi-structural) │  │ (BGVAR)│         │ (Kalman + LightGBM)│
-   └─────────┬─────────┘  └───┬────┘         └─────────┬──────────┘
-             └────────┬───────┴────────────┬───────────┘
-                      ▼                    ▼
-              ┌────── Combiner (BMA) ──────┐
-              └────────────┬───────────────┘
-                           ▼
-   ┌──────── Forecast · Scenario · Backtest Services ──────────────────┐
-   └────────────────────────┬─────────────────────────────────────────┘
-                            ▼
-   ┌──── REST API (Spring Boot) · MCP Server · Public Dashboard ──────┐
-   └──────────────────────────────────────────────────────────────────┘
+                 ┌────────────── External Data Sources ──────────────┐
+                 │  Upstream US agencies (BEA, BLS, FRB, Treasury,   │
+                 │  Census) · OECD ORDRA · ECB SDW · BIS · IMF SDMX  │
+                 │  · WB WDI · UN Comtrade  │  GSCPI · PortWatch ·   │
+                 │  GPR · GDELT GKG · OFAC/EU/UN sanctions           │
+                 └───────────────────┬───────────────────────────────┘
+                                     ▼
+                  Ingestion + Vintage Store (Tier-V: vintage; Tier-T: latest-only)
+                                     ▼
+                   Curation & Feature Layer (frequency harmoniz., SA, weights)
+                                     ▼
+                   ┌─────────────────────────────────────────────┐
+                   │     L3  —  Workhorse Forecast Layer        │
+                   │   (DFM + ML residual + large BVAR variants;│
+                   │    BMA over variants → density forecast)   │
+                   └────────────┬────────────────────────────────┘
+                                │
+   ┌────────────────────────────┼──────────────────────────────┐
+   ▼                            ▼                              ▼
+ Forecast Service        Backtest Service             Scenario Subsystem
+ (Tier-V leaderboard,   (vintage replay,                ──► L2 BGVAR (spillover IRFs, annual re-est.)
+  V&V matrix gates)      DM tests, MCS)                 ──► L1 US Core (structural identification, narrative)
+                                                       
+   ┌──────────────── Situation Subsystem (new) ───────────────┐
+   │  Term-spread recession probability (Tier-V)               │
+   │  GPR nowcast (44 countries, deferred build)              │
+   └───────────────────────────────────────────────────────────┘
+
+   Public surface: REST API (Spring Boot) · MCP Server · Dashboard (Vercel)
 ```
 
-#### 5.3.2 Capabilities Delivered
+#### 5.3.2 Capabilities
 
 | Cap-ID | Capability | Block I Status |
 |---|---|---|
-| CAP-01 | Density GDP forecast, 1Q/4Q/8Q/20Q horizons | IOC |
-| CAP-02 | Density CPI forecast, same horizons | IOC |
-| CAP-03 | Policy-rate path | IOC |
-| CAP-04 | Unemployment forecast | v0.4 |
-| CAP-05 | FX nominal/real | v0.4 |
-| CAP-06 | Daily current-quarter nowcast | v0.4 |
-| CAP-07 | Ad-hoc scenario IRFs | v0.4 |
-| CAP-08 | Public leaderboard | v0.4 |
-| CAP-09 | Model cards | v1.0 |
+| CAP-01 | Density GDP forecast, Tier-V, 1Q/4Q/8Q/20Q | IOC |
+| CAP-02 | Density CPI forecast, Tier-V | IOC |
+| CAP-03 | Policy-rate path (curve-anchored), Tier-V | IOC |
+| CAP-04 | Unemployment forecast, Tier-V | v0.4 |
+| CAP-05 | Daily L3 nowcast where high-freq covariates exist | v0.4 |
+| CAP-06 | Ad-hoc scenario IRFs (L2 propagation; L1 identification when US-origin) | v0.4 |
+| CAP-07 | Tier-V public leaderboard with V&V matrix | v0.4 |
+| CAP-08 | Tracked-only dashboard for Tier-T | v0.4 |
+| CAP-09 | Model cards per release | v1.0 |
 | CAP-10 | Bulk historical forecast export | v1.0 |
 | CAP-11 | MCP-driven scenario authoring | v0.4 |
+| **CAP-12 (new)** | **Term-spread recession-probability endpoint (Tier-V)** | v0.4 |
+| **CAP-13 (new)** | **GPR nowcast endpoint (44 countries)** | Block II candidate; build deferred pending probe |
 
 ### 5.4 Modes of Operation
 
-| Mode-ID | Mode | Description | Trigger |
-|---|---|---|---|
-| M-01 | Quiescent Read | Serve cached forecasts; no model run | Default |
-| M-02 | Daily Nowcast | Refresh L3 state on yesterday's data | 06:00 UTC cron |
-| M-03 | Monthly Recalibration | Re-estimate L3 weights + Combiner weights | First Mon 02:00 UTC |
-| M-04 | Quarterly Full Run | Re-estimate L1 + L2; emit new forecast cohort | National accounts release detected |
-| M-05 | Scenario Run | Apply shock; compute counterfactual; cache | API POST `/scenario` |
-| M-06 | Vintage Replay | Backtest over historical vintages | CI on PR or cron weekly |
-| M-07 | Maintenance | Read-only frozen; reindex DB; rebuild caches | Operator-initiated |
-| M-08 | Degraded | One subsystem failed; serve last-good with warnings | Auto |
-
-Mode transitions:
-- M-01 → M-02/03/04: scheduler.
-- Any → M-08: subsystem health check fail.
-- M-08 → M-01: operator clears alert.
-- Any → M-07: operator scheduled window.
-
-### 5.5 User Classes and Other Involved Personnel
-
-| User-ID | Class | Persona Sketch | Primary Mode | Auth |
+| Mode-ID | Mode | Description | Trigger | Change |
 |---|---|---|---|---|
-| U-01 | Anonymous reader | Journalist checking next-quarter GDP for an article | M-01 read-only | None |
-| U-02 | Registered analyst | Macro consultant authoring scenarios | M-05 | API key (free tier) |
-| U-03 | Paying subscriber | Asset manager pulling bulk densities | M-05 + M-01 | API key (paid) |
-| U-04 | Internal agent | oblique-anvil pushing stress shocks | M-05 | mTLS |
-| U-05 | Academic auditor | Verifying leaderboard claim | M-06 (replay) | None |
-| U-06 | Program operator | Triggers M-07, responds to M-08 | Admin | SSH + 2FA |
-| U-07 | Contributor | Adds new country adapter | Dev environment only | GitHub |
-| U-08 | Model card reviewer | External SME validating release | M-01 + repo access | GitHub |
+| M-01 | Quiescent Read | Serve cached forecasts | Default | — |
+| M-02 | Daily Nowcast | Refresh L3 state | 06:00 UTC cron | L3 only |
+| M-03 | Monthly Recalibration | Re-estimate L3 weights + BMA over variants | 1st Mon 02:00 UTC | L3 only (was L3+L2+L1) |
+| M-04 | Quarterly Full Run | Re-estimate L3 + L1 (US) | National accounts release | L2 dropped from quarterly |
+| **M-04a (new)** | **Annual GVAR Re-estimation** | Re-estimate L2 BGVAR | Once per calendar year on a fixed date | New mode |
+| M-05 | Scenario Run | Apply shock; compute counterfactual; cache | API POST `/scenario` | L1+L2 invoked |
+| M-06 | Vintage Replay | Backtest over historical vintages | CI on PR or cron weekly | Tier-V only |
+| M-07 | Maintenance | Read-only frozen | Operator-initiated | — |
+| M-08 | Degraded | One subsystem failed | Auto | — |
+| **M-09 (new)** | **Situation Refresh** | Recompute recession probability + (when built) GPR nowcast | Daily | New mode |
+
+### 5.5 User Classes (private-use scope)
+
+Rev B listed 8 personas; rev C narrows to realistic private-use shape:
+
+| User-ID | Class | Persona | Auth |
+|---|---|---|---|
+| U-01 | Program owner (self) | Both consumer and operator | SSH + 2FA + API key |
+| U-02 | Internal agent (oblique-anvil, -oracle, -plan) | Programmatic shock submission and forecast consumption | API key (rotating) |
+| U-03 | Public anonymous reader | Dashboard browsing only | None |
+| U-04 | Future academic auditor | Vintage replay verification (read-only) | None |
 
 ### 5.6 Support Environment
-- **Hosting:** Hetzner CCX23 (×2 VMs); GitHub for code; Vercel for dashboard; Modal/RunPod for ephemeral GPU.
-- **Monitoring:** Grafana + Loki + Prometheus on `og-app-01`; budget alarms via cloud provider.
-- **Documentation:** Markdown in-repo; auto-rendered to GitHub Pages; OpenAPI/MCP descriptors auto-published.
-- **Community:** GitHub Discussions + Discord; SLA-free, public-only.
+
+- **Hosting:** Hetzner CCX23 baseline (1 VM at IOC; second only if L2 annual re-estimation needs it).
+- **Monitoring:** Grafana + Loki + Prometheus on-node.
+- **Documentation:** Markdown in-repo; GitHub Pages.
+- **Community:** GitHub repository, public; no Discord at private-project scope.
 
 ---
 
-## 6. Operational Scenarios (expanded)
+## 6. Operational Scenarios
 
-### 6.1 OS-01 — Routine Daily Nowcast (happy path)
-- **Pre-conditions:** all data adapters healthy as of yesterday 18:00 UTC.
-- **Steps:**
-  1. 06:00 UTC cron fires `daily_nowcast` Dagster job.
-  2. Adapters fetch any new daily-frequency observations (electricity, AIS, GDELT, Trends).
-  3. L3 DFM Kalman filter advances; ML residual is recomputed.
-  4. Combiner reads L1 and L2 last-known posterior, mixes with new L3, emits new nowcast.
-  5. Forecast records appended to `forecast_point` with new `run_id`.
-  6. Dashboard refresh; MCP cache invalidation.
-- **Post-conditions:** new run visible in `/v1/runs/{run_id}` within 30 min of cron start.
-- **Success criteria:** end-to-end wall clock ≤ 30 min; zero NaN forecasts emitted.
+Carried forward from rev B with edits per architecture changes.
+
+### 6.1 OS-01 — Routine Daily Nowcast
+
+Unchanged from rev B except: **L3 only** (no L2 in critical path). End-to-end ≤30 min.
 
 ### 6.2 OS-02 — Monthly Re-estimation
-- **Pre-conditions:** prior month's daily runs complete; vintage cutoff frozen.
-- **Steps:**
-  1. First Monday 02:00 UTC, `monthly_recalibration` job fires.
-  2. GPU provisioned via Modal API.
-  3. L3 weights re-estimated (LightGBM retraining on factor scores + alt features).
-  4. Combiner BMA weights recomputed from rolling 24-month log-score window.
-  5. Leaderboard materialized view rebuilt.
-  6. GPU released.
-- **Failure response:** if GPU provisioning fails 3× → fall back to CPU (slower, still ≤ 4h); if still fails → mode M-08, weights pinned to last-good.
+
+**L3 weights only.** GPU provisioned via Modal API for the boost-tree retraining if needed; otherwise CPU. Combiner BMA over L3 variants is recomputed from rolling 24-month log-score window.
 
 ### 6.3 OS-03 — Quarterly Full Run
-- **Pre-conditions:** national accounts release detected (BEA, Eurostat, ABS, etc.) → triggers per country.
-- **Steps:**
-  1. Vintage snapshot frozen at release time; hash computed.
-  2. L1 country cores re-estimated via NUTS (NumPyro) on GPU.
-  3. L2 GVAR re-estimated using L1 posteriors as informative priors.
-  4. L3 retrained on new factor structure.
-  5. Combiner emits forecast cohort for all horizons.
-  6. Backtest subsystem appends out-of-sample point against now-revealed actual.
-- **Success criteria:** new run available within 4h of release.
 
-### 6.4 OS-04 — Ad-hoc Scenario (subscriber)
-- **Pre-conditions:** valid API key with scenario quota remaining.
-- **Steps:**
-  1. POST `/v1/scenario` with shock JSON.
-  2. Scenario Parser validates; identifies originating country and shock channel.
-  3. Identification selector defaults to Cholesky unless overridden.
-  4. Propagator pulls cached L1+L2+L3 posteriors, applies shock at L1 of originating country, propagates through L2, recomputes conditional L3.
-  5. Fan chart rendered server-side (matplotlib → PNG and JSON quantiles).
-  6. Response with `run_id`, JSON quantile paths, and PNG URL.
-- **Performance gate:** p95 ≤ 60 s (canonical workload WLD-SCEN-01).
+L3 + L1 (US). National-accounts triggered. L2 *not* in this loop.
 
-### 6.5 OS-05 — Vintage Replay (CI)
-- **Trigger:** PR opened touching `model/` or `combiner/`.
-- **Steps:**
-  1. CI checks out PR branch.
-  2. Spins up replay environment (containerized).
-  3. Iterates over monthly vintages from 2014-01 to most recent − 2y.
-  4. At each vintage, re-runs forecast as system would have at the time.
-  5. Computes RMSE / CRPS vs. ultimate-revised actuals.
-  6. Posts comparison vs. main branch to PR.
-- **Pass criterion:** no metric degraded by >5% across any country-horizon cell.
+### 6.4 OS-03a (new) — Annual GVAR Re-estimation
 
-### 6.6 OS-06 — Stress Event Auto-trigger
-- **Trigger:** monitored signal exceeds threshold (e.g., VIX > 35, BAA-10y spread > 400bp, equity sell-off > 5% in 1 day).
-- **Steps:**
-  1. Stress detector emits event.
-  2. Scenario service queues canonical stress shocks (Anvil-generated library).
-  3. Results published to dashboard; subscribers alerted via webhook.
+Once per year, fixed date. L2 BGVAR re-estimated via the `BGVAR` R package on a moderately sized node (8–16 vCPU / 32–64 GB). Annual posterior cached; used by Scenario Subsystem until next year. If MCMC slow, VB fallback per R04.
 
-### 6.7 OS-07 — Source Outage (failure path)
-- **Trigger:** primary source 5xx for ≥ 6 consecutive pulls (≈ 30 min).
-- **Steps:**
-  1. Adapter switches to mirror source if defined (e.g., FRED → ALFRED ALFRED → ECB SDW fallback for some series).
-  2. If no mirror, freeze series at last-good; forecast issued with `data_completeness` flag.
-  3. If completeness < 90%, refuse to emit (M-08).
+### 6.5 OS-04 — Ad-hoc Scenario
 
-### 6.8 OS-08 — Bad Forecast Discovered Post-Publication
-- **Trigger:** internal QA or external auditor identifies error.
-- **Steps:**
-  1. Open incident issue (`inc/` label).
-  2. New corrected run issued with same input vintage but new `posterior_hash`.
-  3. Old run's `superseded_by` pointer set.
-  4. Public retraction notice posted on dashboard incident log.
-  5. Post-mortem within 5 business days, published.
+POST `/v1/scenario`. Scenario Subsystem retrieves cached L2 posterior; uses L1 (US) for identification if shock origin = US, otherwise default Cholesky / sign restrictions in L2. Propagation through L2; L3-conditional updates for non-Tier-V countries. Fan chart rendered. p95 ≤ 60s.
+
+### 6.6 OS-05 — Vintage Replay (CI)
+
+Tier-V only. PR opened touching `model/` or `combiner/`. Replays 2014–most-recent over monthly vintages; computes RMSE / CRPS / DM / MCS vs. main branch. Pass: no metric degraded >5%.
+
+### 6.7 OS-06 — Stress Event Auto-trigger
+
+Unchanged from rev B. Triggers stress shocks library through Scenario Subsystem.
+
+### 6.8 OS-07 — Source Outage
+
+Adapter switches to mirror. **Notable additional fallback for FRED-substituted sources**: each upstream US agency has its own outage profile; the adapter cohort handles per-agency 5xx independently.
+
+### 6.9 OS-08 — Bad Forecast Discovered
+
+Unchanged.
+
+### 6.10 OS-09 (new) — Situation Endpoint Update
+
+Daily. Term-spread recession-probability recomputed per Tier-V country using Bauer-Mertens replication code adapted per country. When GPR nowcast build is approved, runs alongside.
 
 ---
 
 ## 7. Summary of Impacts
 
 ### 7.1 Operational
-- Adds a daily 06:00 UTC compute window (≤ 30 min on baseline).
-- Adds a monthly Sunday→Monday GPU burst window (≤ 4h).
-- Adds quarterly full-run windows triggered by external releases.
+
+- Daily L3 nowcast window (≤30 min on baseline).
+- Monthly L3 recalibration window (≤4h CPU; GPU optional).
+- Quarterly L3+L1 window (≤4h per Tier-V country).
+- **Annual L2 re-estimation window** (~12h, fixed date).
+- Daily Situation refresh (≤5 min).
 
 ### 7.2 Organizational
-- Requires a single program owner + at most one part-time data lead initially; bus factor risk mitigated by doc-as-code (NFR-MNT-001).
+
+Single program owner; bus factor of 1 mitigated by doc-as-code.
 
 ### 7.3 Financial
-- Sustaining cloud: ≤ USD 200/mo (NFR-COS-001), broken down approximately as:
-  - VMs: USD 80
-  - GPU bursts: USD 40
-  - Storage: USD 30
-  - Egress/CDN/dashboard: USD 30
-  - Contingency: USD 20
+
+| Line | Estimate (USD/mo) | Note |
+|---|---|---|
+| Primary VM (Hetzner CCX23 or equivalent) | 30–50 | Baseline |
+| Annual L2 re-estimation node (amortized) | 5–10 | Burst node × 12h × 1/year |
+| GPU bursts (Modal/RunPod) | 10–30 | Monthly L3 retraining |
+| Storage (incl. vintage archive ~50 GB) | 5–10 | Negligible |
+| Egress + dashboard CDN | 5–10 | Vercel free or minimal |
+| Contingency | 10 | — |
+| **Total realistic** | **65–120** | Inside USD 200 informational target |
 
 ### 7.4 Reputational
-- Public leaderboard exposes the system to embarrassment when wrong — by design. This is a feature, not a bug. The program owner must accept that early-life accuracy below consensus is publicly visible.
+
+Tier-V leaderboard is publicly visible from day 1. Early-life performance below WEO/OECD EO is acceptable as long as the *failure mode is interpretable* via the V&V matrix.
 
 ---
 
-## 8. Analysis of Proposed System
+## 8. Analysis
 
-### 8.1 Summary of Improvements over Status Quo
-- Open license closes the access gap.
-- Vintage discipline closes the verifiability gap.
-- MCP surface closes the agentic-integration gap.
-- Hybrid architecture closes the "structural OR accurate" false dilemma.
+### 8.1 Improvements over status quo
+
+- **Open license + vintage discipline + density forecasts + MCP surface** — none of the open alternatives offer this combination.
+- **OECD-26 personal-scale operational forecasting** — a market of one, served well.
 
 ### 8.2 Disadvantages and Limitations
-- **D-01:** Three-layer system is harder to debug than monoliths.
-- **D-02:** Bayesian estimation at 80 countries is non-trivial; performance risk RSK-002.
-- **D-03:** Vintage discipline for many emerging-market series is fundamentally unavailable pre-2026; backtests will have coverage gaps.
-- **D-04:** Public leaderboard means early embarrassment is guaranteed.
-- **D-05:** Open dataset constraint forecloses some alt-data sources (e.g., licensed credit card panels) that incumbents use.
 
-### 8.3 Alternatives Considered
+- D-01: Tier-V scope is honestly OECD-only. Naming "OPENGEM" is aspirational.
+- D-02: Single-maintainer.
+- D-03: Public leaderboard means visible failure.
+- D-04: Upstream-agency adapter cohort is more complex than a single FRED dependency would have been.
+- D-05: Block I cannot deliver true "≥40 / ≥80" coverage; Tier-T is a tracking, not forecasting, claim.
+
+### 8.3 Alternatives Considered (carried + added)
 
 | Alt-ID | Alternative | Rejected because |
 |---|---|---|
-| ALT-01 | Pure ML (Nixtla-only, no structural layer) | Loses interpretability; no scenario semantics |
-| ALT-02 | Pure DSGE (EAGLE-style only) | Forecast accuracy historically poor; scaling to 80 countries impractical |
-| ALT-03 | Pure GVAR (Pesaran-only) | No structural interpretation; no nowcasting |
-| ALT-04 | Wrap an LLM as forecaster | No verifiable inference; would fail POL-02, POL-10 |
-| ALT-05 | Use only NiGEM via license | Defeats open-source mission; cost model fails |
-| ALT-06 | Defer to academia (don't build) | Gap has persisted >20 years; will not close passively |
+| ALT-01 | Pure ML | Loses interpretability/scenarios; |
+| ALT-02 | Pure DSGE | Accuracy historically poor at scale; |
+| ALT-03 | Pure GVAR | No nowcasting/density at scale; |
+| ALT-04 | LLM-as-forecaster | Unverifiable; |
+| ALT-05 | Wrap NiGEM | Open-source mission failure; |
+| ALT-06 | Defer to academia | Gap persists 20+ years; |
+| **ALT-07 (new)** | **Stay with rev B 3-layer-equal architecture** | R03 evidence: 3 ≯ 2 ≯ 1 for accuracy; cost not justified |
+| **ALT-08 (new)** | **Use FRED as primary US data source** | R05: 2024 ToS prohibits caching + ML training |
 
-### 8.4 Critical Success Factors
-- **CSF-01:** Bilateral trade matrix construction must be automatable from Comtrade. If manual curation creeps in, IOC schedule slips.
-- **CSF-02:** Vintage archival must start day-1; missed days are permanently lost.
-- **CSF-03:** Leaderboard must be live by v0.4 or the verifiability proposition is rhetoric.
-- **CSF-04:** Hardware ceiling at 4 vCPU / 16 GB must hold for L2; if not, cost model breaks.
+### 8.4 Critical Success Factors (revised)
 
-### 8.5 Critical Failure Conditions
-- **CFC-01:** OPENGEM at FOC fails primary V&V (≥75% beating AR(1)) → re-baseline as "GVAR-only forecasting toolkit," abandon parity claim.
-- **CFC-02:** Cloud bill > USD 400/mo for 2 consecutive months → architectural rebase; possible move to colocated hardware.
-- **CFC-03:** Source license violation discovered → take down affected derivatives within 24h.
+- CSF-01 Tier-V data foundation present at IOC (vintage adapters complete; upstream-agency adapters complete).
+- CSF-02 L3 BMA-combiner produces well-calibrated density on Tier-V at 1Q–4Q.
+- CSF-03 Leaderboard live by v0.4 with V&V matrix.
+- CSF-04 Hardware envelope holds informationally (≤USD 200/mo target, no hard ceiling).
+- **CSF-05 (new)** Upstream-agency adapter cohort complete for US BEFORE FRED-substitution-dependent code is written.
+
+### 8.5 Critical Failure Conditions (revised)
+
+- CFC-01 Tier-V V&V matrix fails at FOC across the board → re-baseline as "verifiable forecast infrastructure," drop "operational parity" framing.
+- CFC-02 *removed* — cost is informational, no auto-rebase.
+- CFC-03 Source ToS violation discovered → take down within 24h. (Unchanged.)
+- **CFC-04 (new)** Vintage archive corruption discovered → re-derive from raw source; mark affected leaderboard window void.
 
 ---
 
 ## 9. Notes
 
 ### 9.1 Naming
-"OPENGEM" intentionally puns on Oxford Economics' GEM as a banner of intent. No trademark conflict has been identified at the time of writing (TBR-005: confirm before public launch).
 
-### 9.2 Open Issues (carried to StRS / SRS)
-- TBR-001: country list at IOC (master doc Appendix B).
-- TBR-002: Australia inclusion priority (personal-use signal from program owner).
-- TBR-003: Whether MCP server's "scenario" tool requires paid auth from day 1 or after pilot.
+"OPENGEM" remains aspirational on the global axis. Consider re-naming if Block II/III doesn't materialize. Defer the naming question.
+
+### 9.2 Open Issues carried to STRS / SRS
+
+- TBR-006: ACLED ToS for private-non-commercial use.
+- TBR-007: Final Tier-V country roster (currently ~25; finalize at SRR).
+- TBR-008: Consensus Economics access (deferred to future public-launch round).
+- TBR-009: Whether the SSDD-008 Situation Subsystem owns L3-internal recession-probability or wraps an external Bauer-Mertens replication.
 
 ---
 
 ## 10. Appendices
 
-### Appendix A — Acronyms used herein
-ADR, BMA, BOE, BMA, CRPS, DM, DSGE, FOC, FPAS, GDP, GEM, GVAR, ICD, IFS, IOC, MCP, MCS, NIESR, OCR, OEx, PDR, PIT, RMSE, SRR, SDR, StRS, SSDD, TBD, TBR, V&V, WB, WDI, WEO. (Full glossary deferred to Iteration 25.)
+### Appendix A — Acronyms
 
-### Appendix B — Cross-Reference to Master Document Sections
-- This document realizes master §1 in full.
-- Forward references: §5.3.2 anticipates SSDDs 001–007; §5.4 anticipates the State Machine specified in SAD §4.
+Carried forward; add: **BMA**, **BVAR**, **CRPS**, **DFM**, **GPR**, **GSCPI**, **MCS**, **NUTS**, **ORDRA**, **PIT**, **RTDSM**, **SDMX**, **Tier-V / Tier-T**, **WEO**.
 
-### Appendix C — Approval
-- Drafted: 2026-05-19 by Chief Systems Engineer (acting).
-- Awaiting SRR signoff by Program Owner.
+### Appendix B — Approval
+
+- Drafted (rev C): 2026-05-24 by Chief Systems Engineer (acting).
+- **Awaiting program-owner sign-off** to baseline.
+- Predecessor rev B remains the prior baseline until sign-off.
 
 ---
-*End of OG1-CONOPS-001 — Revision B (draft).*
+
+*End of OG1-CONOPS-001 — Revision C (DRAFT).*
