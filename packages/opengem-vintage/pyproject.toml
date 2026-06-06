@@ -1,0 +1,26 @@
+[project]
+name = "opengem-vintage"
+version = "0.1.0"
+description = "Vintage-correct storage primitives for time-series data — TimescaleDB schema, hashing, snapshot writer"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "OPENGEM Maintainers" }]
+dependencies = [
+    "opengem-types>=0.1.0,<0.2.0",
+    "psycopg[binary]>=3.2,<4",
+]
+
+[project.optional-dependencies]
+sqlite = []  # in-memory SQLite fallback for tests; uses stdlib sqlite3
+duckdb = ["duckdb>=1.1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opengem_vintage"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "sql", "README.md"]

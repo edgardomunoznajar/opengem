@@ -1,0 +1,254 @@
+openapi: 3.1.0
+info:
+  title: OPENGEM Public API
+  version: 0.1.0
+  description: |
+    Read-only public surface for the OPENGEM World Dashboard.
+    Every response is vintage-stamped. Every model has a model card.
+
+    License: Apache-2.0 (code) / CC-BY-4.0 (data).
+    Attribution: 'OPENGEM (opengem.org)' required on republished data.
+  contact:
+    name: OPENGEM
+    url: https://opengem.org
+    email: hello@opengem.org
+  license:
+    name: CC-BY-4.0 (data)
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://opengem.org
+    description: Production
+  - url: http://localhost:8001
+    description: Local development
+paths:
+  /v1/health:
+    get:
+      summary: Service health
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok, version, as_of]
+                properties:
+                  ok: { type: boolean }
+                  version: { type: string }
+                  as_of: { type: string, format: date-time }
+  /v1/situation:
+    get:
+      summary: All current situation tiles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/SituationTile' }
+  /v1/scenarios:
+    get:
+      summary: All triggered scenarios with probability
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Scenario' }
+  /v1/forecasts:
+    get:
+      summary: Forecasts, filterable
+      parameters:
+        - in: query
+          name: country
+          schema: { type: string, minLength: 3, maxLength: 3 }
+          description: ISO-3166-1 alpha-3 country code
+        - in: query
+          name: indicator
+          schema: { type: string }
+        - in: query
+          name: horizon
+          schema:
+            type: string
+            enum: [nowcast, 1Q, 4Q, 2Y, 5Y]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Forecast' }
+  /v1/countries/{iso3}:
+    get:
+      summary: Country bundle (situation + forecasts)
+      parameters:
+        - in: path
+          name: iso3
+          required: true
+          schema: { type: string, minLength: 3, maxLength: 3 }
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Country not covered
+  /v1/recession-probability:
+    get:
+      summary: Bauer-Mertens 12-month recession probability per country
+      parameters:
+        - in: query
+          name: country
+          required: true
+          schema: { type: string, minLength: 3, maxLength: 3 }
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: No recession nowcast for that country
+  /v1/gpr-nowcast:
+    get:
+      summary: Caldara-Iacoviello GPR nowcast (global or per-country)
+      parameters:
+        - in: query
+          name: country
+          schema: { type: string, minLength: 3, maxLength: 3 }
+      responses:
+        '200':
+          description: OK
+  /v1/leaderboard:
+    get:
+      summary: Forecast leaderboard per indicator × horizon
+      parameters:
+        - in: query
+          name: indicator
+          required: true
+          schema: { type: string }
+        - in: query
+          name: horizon
+          schema:
+            type: string
+            enum: [nowcast, 1Q, 4Q, 2Y, 5Y]
+            default: 4Q
+      responses:
+        '200':
+          description: OK
+  /v1/accountability/summary:
+    get:
+      summary: Published / scored / missed / pending counts
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    Provenance:
+      type: object
+      required: [git_sha, data_lockfile_hash, generated_at]
+      properties:
+        git_sha:
+          type: string
+          description: Git commit hash at forecast time
+        container_digest:
+          type: string
+          description: 'OCI image digest, e.g. sha256:...'
+        data_lockfile_hash:
+          type: string
+        generated_at:
+          type: string
+          format: date-time
+    Bands:
+      type: object
+      required: [p10, p50, p90]
+      properties:
+        p10: { type: number }
+        p50: { type: number }
+        p90: { type: number }
+    ConsensusOverlay:
+      type: object
+      properties:
+        weo: { type: number, description: 'IMF WEO comparator' }
+        oecd_eo: { type: number, description: 'OECD EO comparator' }
+        frb_sep: { type: number, description: 'FRB SEP comparator (US only)' }
+        ecb_spf: { type: number, description: 'ECB SPF comparator (EA only)' }
+    Forecast:
+      type: object
+      required:
+        - vintage_id
+        - model_id
+        - model_card_url
+        - country
+        - indicator
+        - horizon
+        - base_period
+        - scoring_period
+        - point
+        - bands
+        - provenance
+      properties:
+        vintage_id: { type: string, example: '2026-06-06-1200Z' }
+        model_id: { type: string, example: 'opengem-l3-dfm-bma-v0.4' }
+        model_card_url: { type: string, format: uri }
+        country: { type: string, minLength: 3, maxLength: 3 }
+        indicator: { type: string, example: 'gdp_yoy' }
+        horizon:
+          type: string
+          enum: [nowcast, 1Q, 4Q, 2Y, 5Y]
+        base_period: { type: string, example: '2026-Q2' }
+        scoring_period: { type: string, example: '2027-Q2' }
+        point: { type: number }
+        bands: { $ref: '#/components/schemas/Bands' }
+        consensus_overlay: { $ref: '#/components/schemas/ConsensusOverlay' }
+        provenance: { $ref: '#/components/schemas/Provenance' }
+        miss_log_url: { type: string, format: uri }
+        badges:
+          type: array
+          items:
+            type: string
+            enum: [high-coverage, peer-reviewed, replicated, ensemble-of-N, single-source, experimental]
+    Scenario:
+      type: object
+      required: [slug, name, description, probability, triggered_at, affected_countries, affected_indicators, methodology_url]
+      properties:
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        trigger_summary: { type: string }
+        probability: { type: number, minimum: 0, maximum: 1 }
+        triggered_at: { type: string, format: date-time }
+        affected_countries:
+          type: array
+          items: { type: string, minLength: 3, maxLength: 3 }
+        affected_indicators:
+          type: array
+          items: { type: string }
+        methodology_url: { type: string, format: uri }
+        narrative_block: { type: string }
+    SituationTile:
+      type: object
+      required: [kind, value, as_of, source_url]
+      properties:
+        kind:
+          type: string
+          enum:
+            - recession_prob
+            - gpr_nowcast
+            - gscpi
+            - fci
+            - inflation_nowcast
+            - gdp_nowcast
+            - surprise_index
+            - yield_curve
+        country:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 'ISO-3 country (omitted for global tiles)'
+        value: { type: number }
+        delta: { type: number }
+        spark:
+          type: array
+          items: { type: number }
+        as_of: { type: string, format: date-time }
+        source_url: { type: string, format: uri }

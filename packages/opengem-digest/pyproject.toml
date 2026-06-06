@@ -1,0 +1,20 @@
+[project]
+name = "opengem-digest"
+version = "0.1.0"
+description = "Daily digest renderer for OPENGEM — structured JSON + markdown ready to paste into ChatGPT"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "OPENGEM Maintainers" }]
+dependencies = [
+    "opengem-types>=0.1.0,<0.2.0",
+    "opengem-scenarios>=0.1.0,<0.2.0",
+    "opengem-recession-prob>=0.1.0,<0.2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opengem_digest"]

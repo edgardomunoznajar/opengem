@@ -1,0 +1,55 @@
+# SIGNOFF.md — TEMPLATE
+
+> Copy this template to `SIGNOFF.md` (without `.template`), fill in the placeholders, and commit. Then follow the rest of R29 §9.
+
+---
+
+# Pre-PDR Sign-off
+
+**Date**: YYYY-MM-DD
+**Program Owner**: edgardo
+**Decision**: [A — Accept rebaseline | B — Renarrow scope further | C — Sunset]
+
+**One-sentence rationale**:
+> ...
+
+**References reviewed**:
+- [x] R99 Synthesis (docs/research/R99-synthesis.md)
+- [x] R29 Decision framework (docs/research/R29-decision-framework.md)
+- [x] R13 Anvil stress-test (docs/research/R13-anvil-stress-test.md)
+- [x] R15 Personal use cases (docs/research/R15-personal-use-cases.md)
+- [x] CONOPS rev C draft (docs/design/00-program/OG1-CONOPS-001-revC-draft.md)
+- [x] Master design doc v2.0 draft (docs/design/00-master-design-document-v2.0-draft.md)
+- [x] LOOP_PLAN v2 draft (docs/design/LOOP_PLAN-v2.md)
+
+**Honest answers to the pre-mortem questions (R29 §7)**:
+
+> "If, 12 months from now, OPENGEM Block I is unfinished and I've abandoned it, what was the most likely reason?"
+
+Answer: ...
+
+> What I've committed in time per week:
+
+Answer: ... hours/week
+
+> Risks I'm consciously accepting:
+
+- ...
+
+**Promotion of drafts to baseline** (only if Decision = A):
+
+- [ ] `docs/design/00-program/OG1-CONOPS-001-revC-draft.md` → `OG1-CONOPS-001.md` (rev C becomes baseline)
+- [ ] `docs/design/00-master-design-document-v2.0-draft.md` → `00-master-design-document.md` (v2.0 becomes baseline)
+- [ ] `docs/design/LOOP_PLAN-v2.md` → `LOOP_PLAN.md` (v2 becomes baseline)
+- [ ] README banner updated
+- [ ] Tag committed: `git tag pre-pdr-r99-accepted-YYYY-MM-DD`
+
+**Next action**:
+
+If A: Begin R18 Phase 0 (repo setup, ~4 hours). Next checkpoint: end of Week 4 (US adapter cohort working).
+If B: Write `BLOCK-I-NARROW.md` defining the reduced scope explicitly.
+If C: Write `SUNSET.md`; update README to archived banner; final V&V evaluation (none to run); cleanup.
+
+---
+
+*End of template.*

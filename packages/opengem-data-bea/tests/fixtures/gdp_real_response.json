@@ -1,0 +1,41 @@
+{
+  "BEAAPI": {
+    "Results": {
+      "Statistic": "Gross Domestic Product",
+      "UTCProductionTime": "2026-04-28T13:00:00",
+      "Data": [
+        {
+          "TableName": "T10101",
+          "SeriesCode": "A191RX",
+          "LineNumber": "1",
+          "LineDescription": "Gross domestic product",
+          "TimePeriod": "2025Q4",
+          "METRIC_NAME": "Annualized growth rate",
+          "CL_UNIT": "Level",
+          "UNIT_MULT": "9",
+          "DataValue": "23,500.123",
+          "NoteRef": "T10101.1"
+        },
+        {
+          "TableName": "T10101",
+          "SeriesCode": "A191RX",
+          "LineNumber": "1",
+          "TimePeriod": "2026Q1",
+          "CL_UNIT": "Level",
+          "UNIT_MULT": "9",
+          "DataValue": "23,612.508"
+        },
+        {
+          "TableName": "T10101",
+          "SeriesCode": "DPCERX",
+          "LineNumber": "2",
+          "TimePeriod": "2026Q1",
+          "CL_UNIT": "Level",
+          "UNIT_MULT": "9",
+          "DataValue": "16,100.0",
+          "Note": "this row is for PCE line 2 and should be filtered out"
+        }
+      ]
+    }
+  }
+}

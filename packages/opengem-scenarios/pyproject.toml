@@ -1,0 +1,18 @@
+[project]
+name = "opengem-scenarios"
+version = "0.1.0"
+description = "OPENGEM scenario engine — canonical scenario library + invocation + composition for Stratfor-grade geopolitical-economic analysis"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "OPENGEM Maintainers" }]
+dependencies = [
+    "opengem-types>=0.1.0,<0.2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opengem_scenarios"]

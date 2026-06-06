@@ -1,29 +1,50 @@
-# Build / runtime artifacts (will appear post-CDR)
+# Build / runtime artifacts
 target/
 build/
 dist/
 __pycache__/
 *.pyc
+*.pyo
 .venv/
 venv/
 node_modules/
 .next/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# uv.lock IS committed — pins the workspace for reproducible CI / fresh checkouts.
 
 # Editor / OS
 .idea/
 .vscode/
 *.swp
 .DS_Store
+Thumbs.db
+*~
 
-# Data / secrets (will appear post-CDR)
+# Data / secrets
 .env
 .env.*
 secrets/
 data/raw/
 data/vintage/
+data/derived/
 *.parquet
 *.sqlite
+*.duckdb
+
+# Research scratch: external repo clones used for reference during research-300.
+# Not OPENGEM code; each carries its own .git. Kept on disk, never tracked.
+research-300/clones/
 
 # Local notes
 SCRATCH.md
 NOTES.md
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/

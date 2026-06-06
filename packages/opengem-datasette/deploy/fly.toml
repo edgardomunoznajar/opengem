@@ -1,0 +1,62 @@
+# Fly.io deploy config for data.opengem.org — the strategic moat surface.
+# Cost: ~$5/mo for a shared-cpu-1x machine + 10GB volume.
+#
+# Deploy:
+#   fly launch --name opengem-data --image datasetteproject/datasette:latest
+#   fly volumes create opengem_data --size 10 --region iad
+#   fly deploy
+#
+# Snapshot refresh (run from Dagster or a cron):
+#   opengem-snapshot --vintage today --out /tmp/opengem.db
+#   fly ssh sftp shell -- put /tmp/opengem.db /data/opengem.db
+#
+# Or use a sibling Fly machine that runs opengem-snapshot and writes to the volume directly.
+
+app = "opengem-data"
+primary_region = "iad"
+
+[build]
+  image = "datasetteproject/datasette:latest"
+
+[[mounts]]
+  source = "opengem_data"
+  destination = "/data"
+
+[env]
+  DATASETTE_PORT = "8001"
+  # Cors so the dashboard at opengem.org can fetch datasette JSON
+  DATASETTE_CORS = "1"
+
+[[services]]
+  internal_port = 8001
+  protocol = "tcp"
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+    force_https = true
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [services.concurrency]
+    type = "requests"
+    hard_limit = 200
+    soft_limit = 100
+
+  [[services.http_checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    path = "/-/health"
+
+[processes]
+  app = "datasette serve /data/opengem.db --port 8001 --host 0.0.0.0 --metadata /data/metadata.yaml --setting allow_download 1 --setting suggest_facets 0 --cors"
+
+[vm]
+  size = "shared-cpu-1x"
+  memory_mb = 512

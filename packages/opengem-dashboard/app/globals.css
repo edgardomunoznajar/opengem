@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  html, body { @apply bg-bg text-ink; }
+  body {
+    font-feature-settings: "rlig" 1, "calt" 1, "tnum" 1, "ss01" 1;
+  }
+  /* Bloomberg-style monospace numerals */
+  .num { @apply font-mono tabular-nums; }
+  /* Tile grid lines */
+  .grid-line { @apply border-line; }
+  /* Sparkline container */
+  .spark { @apply h-6 w-24 text-brand-400; }
+}
+
+@layer components {
+  .tile {
+    @apply rounded-sm border border-line bg-bg-elevated p-3 transition-colors;
+  }
+  .tile-h {
+    @apply text-2xs uppercase tracking-wide text-ink-muted;
+  }
+  .tile-v {
+    @apply num text-2xl text-ink;
+  }
+  .pill {
+    @apply inline-flex items-center rounded-sm px-1.5 py-0.5 text-2xs font-medium;
+  }
+  .pill-good { @apply pill bg-good/15 text-good; }
+  .pill-bad  { @apply pill bg-bad/15  text-bad; }
+  .pill-warn { @apply pill bg-warn/15 text-warn; }
+  .pill-info { @apply pill bg-info/15 text-info; }
+  .kbd {
+    @apply inline-flex items-center rounded-sm border border-line bg-bg-overlay px-1 text-2xs font-mono text-ink-muted;
+  }
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "vintage_id": "2026-06-06-1200Z",
+    "model_id": "opengem-l3-dfm-bma-v0.4",
+    "model_card_url": "https://opengem.org/model-cards/l3-dfm-bma-v0.4",
+    "country": "USA",
+    "indicator": "gdp_yoy",
+    "horizon": "4Q",
+    "base_period": "2026-Q2",
+    "scoring_period": "2027-Q2",
+    "point": 1.9,
+    "bands": { "p10": 0.8, "p50": 1.9, "p90": 3.0 },
+    "consensus_overlay": { "weo": 2.2, "oecd_eo": 2.1, "frb_sep": 2.0 },
+    "provenance": {
+      "git_sha": "a1b2c3d4",
+      "data_lockfile_hash": "sha256:deadbeef",
+      "generated_at": "2026-06-06T12:00:00Z"
+    },
+    "miss_log_url": "https://opengem.org/misses/usa-gdp",
+    "badges": ["ensemble-of-N", "high-coverage"]
+  },
+  {
+    "vintage_id": "2026-06-06-1200Z",
+    "model_id": "opengem-l3-dfm-bma-v0.4",
+    "model_card_url": "https://opengem.org/model-cards/l3-dfm-bma-v0.4",
+    "country": "USA",
+    "indicator": "cpi_yoy",
+    "horizon": "4Q",
+    "base_period": "2026-Q2",
+    "scoring_period": "2027-Q2",
+    "point": 2.5,
+    "bands": { "p10": 1.7, "p50": 2.5, "p90": 3.4 },
+    "consensus_overlay": { "weo": 2.4, "oecd_eo": 2.5, "frb_sep": 2.3 },
+    "provenance": {
+      "git_sha": "a1b2c3d4",
+      "data_lockfile_hash": "sha256:deadbeef",
+      "generated_at": "2026-06-06T12:00:00Z"
+    },
+    "miss_log_url": "https://opengem.org/misses/usa-cpi",
+    "badges": ["ensemble-of-N", "high-coverage", "replicated"]
+  },
+  {
+    "vintage_id": "2026-06-06-1200Z",
+    "model_id": "opengem-l3-dfm-bma-v0.4",
+    "model_card_url": "https://opengem.org/model-cards/l3-dfm-bma-v0.4",
+    "country": "DEU",
+    "indicator": "gdp_yoy",
+    "horizon": "4Q",
+    "base_period": "2026-Q2",
+    "scoring_period": "2027-Q2",
+    "point": 0.7,
+    "bands": { "p10": -0.4, "p50": 0.7, "p90": 1.7 },
+    "consensus_overlay": { "weo": 1.0, "oecd_eo": 0.9 },
+    "provenance": {
+      "git_sha": "a1b2c3d4",
+      "data_lockfile_hash": "sha256:deadbeef",
+      "generated_at": "2026-06-06T12:00:00Z"
+    },
+    "miss_log_url": "https://opengem.org/misses/deu-gdp",
+    "badges": ["ensemble-of-N"]
+  },
+  {
+    "vintage_id": "2026-06-06-1200Z",
+    "model_id": "opengem-l3-dfm-bma-v0.4",
+    "model_card_url": "https://opengem.org/model-cards/l3-dfm-bma-v0.4",
+    "country": "CHN",
+    "indicator": "gdp_yoy",
+    "horizon": "4Q",
+    "base_period": "2026-Q2",
+    "scoring_period": "2027-Q2",
+    "point": 4.3,
+    "bands": { "p10": 3.0, "p50": 4.3, "p90": 5.5 },
+    "consensus_overlay": { "weo": 4.5, "oecd_eo": 4.7 },
+    "provenance": {
+      "git_sha": "a1b2c3d4",
+      "data_lockfile_hash": "sha256:deadbeef",
+      "generated_at": "2026-06-06T12:00:00Z"
+    },
+    "miss_log_url": "https://opengem.org/misses/chn-gdp",
+    "badges": ["ensemble-of-N", "experimental"]
+  }
+]

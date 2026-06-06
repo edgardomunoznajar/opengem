@@ -1,0 +1,529 @@
+# OPENGEM 300-Loop Research & Product Design Queue
+
+**Objective**: Build the OPENGEM "World Dashboard" product — Bloomberg + geopolitics, part dashboard part forecasting — through 300 loops of deep research, open-source survey, product design, and prototype code.
+
+**Mode**: Autonomous, full auto, max effort.
+
+**Started**: 2026-06-06
+
+**Tracker convention**:
+- Each loop produces ONE artifact in `loops/L###-slug.md` (or code in `prototypes/`).
+- Mark loop complete by checking the box and adding the artifact path.
+- Add new loops as discoveries surface.
+- Each artifact must be standalone (re-readable in isolation).
+
+## Phase 0 — Strategic framing (L001–L010)
+
+- [x] L001 — Vision statement: "OPENGEM World Dashboard" — what it is, who it's for, why now — `loops/L001-vision-statement.md`
+- [x] L002 — Competitive landscape map: Bloomberg, Reuters Eikon, FactSet, Stratfor, OurWorldInData, TradingEconomics, Macrobond, OECD Data Portal — `loops/L002-competitive-landscape.md`
+- [x] L003 — User personas: macro-curious YouTuber, geopolitics researcher, sovereign-fund LP, retail prosumer, journalist, hedge fund analyst — `loops/L003-personas.md`
+- [x] L004 — Jobs-to-be-done map: 25 atomic JTBDs across persona × time-horizon — `loops/L004-jtbd-map.md`
+- [x] L005 — North-star metric proposal: 3 candidates evaluated — `loops/L005-north-star-metric.md`
+- [x] L006 — Pricing thesis: free tier vs paid tier vs MCP monetization — `loops/L006-pricing-thesis.md`
+- [x] L007 — Distribution thesis: SEO, RSS, YouTube embed, Substack syndication, MCP — `loops/L007-distribution-thesis.md`
+- [x] L008 — Differentiation: "publishes its mistakes" + open code + machine-readable forecasts — `loops/L008-differentiation.md`
+- [x] L009 — Anti-personas (who this is NOT for) and refusal scope — `loops/L009-anti-personas.md`
+- [x] L010 — 5-year arc compressed: dashboard milestones at Y0/Y1/Y2/Y3/Y5 — `loops/L010-five-year-arc.md`
+
+## Phase 1 — Open-source landscape survey (L011–L080)
+
+### Open-source Bloomberg/terminal alternatives (L011–L020)
+- [x] L011 — OpenBB Terminal: deep dive → `loops/L011-openbb-terminal.md`
+- [x] L012 — Qlib (Microsoft): deep dive → `loops/L012-qlib.md`
+- [x] L013 — Backtrader / VectorBT / Zipline-reloaded: dashboarding angle → `loops/L013-backtrader-vectorbt-zipline.md`
+- [x] L014 — Finos Perspective: streaming grid library → `loops/L014-finos-perspective.md`
+- [x] L015 — TraderHQ / TradingView Lightweight Charts → `loops/L015-lightweight-charts.md`
+- [x] L016 — Datafeedr / DataHub → `loops/L016-data-publishing-platforms.md`
+- [x] L017 — Awesome Quant repos roundup → `loops/L017-awesome-quant-roundup.md`
+- [x] L018 — FinTabNet + financial-document tools → `loops/L018-pdf-table-tools.md`
+- [x] L019 — Open-source order-book / market-data viewers (OUT OF SCOPE) → `loops/L019-order-book-viewers-oom.md`
+- [x] L020 — FinGPT / FinNLP toolkits → `loops/L020-fingpt-finnlp-finrl.md`
+
+### Geopolitical risk + event data (L021–L030)
+- [x] L021 — GDELT 2.0 + GKG: ingestion patterns, schema, terms → `loops/L021-gdelt-gkg.md` (GREEN)
+- [x] L022 — ACLED: API, license, country coverage → `loops/L022-acled.md` (YELLOW — EULA, derivative-metrics only)
+- [x] L023 — ICEWS / Phoenix: status of dataset, open-event-tooling → `loops/L023-icews-phoenix-terrier.md` (ICEWS retired Apr 2023; POLECAT GREEN successor)
+- [x] L024 — Caldara-Iacoviello GPR: replication code, country indices → `loops/L024-gpr.md` (GREEN — five extensions identified)
+- [x] L025 — Cline Center datasets (POLECAT, SPEED, archive) → `loops/L025-cline-center.md` (GREEN — Phoenix/SPEED/Global News Index/Coup/CREG)
+- [x] L026 — UCDP (Uppsala Conflict): open data, dashboards → `loops/L026-ucdp.md` (GREEN — CC-BY-4.0)
+- [x] L027 — V-Dem (Varieties of Democracy): data + visualizer → `loops/L027-vdem.md` (GREEN — free academic + cite)
+- [x] L028 — Open Sanctions: dataset + API → `loops/L028-opensanctions.md` (YELLOW — CC-BY-NC; paid tier needs license)
+- [x] L029 — Stratfor public archive + open intel/OSINT mirrors → `loops/L029-stratfor-osint-mirrors.md` (mixed — mostly RED for substrate, GREEN for code)
+- [x] L030 — Geopolitical risk indices comparison matrix → `loops/L030-geopolitical-risk-indices-comparison.md` (3 GREEN, 2 YELLOW, 4 RED among 9 indices)
+
+### Macro forecasting / nowcasting open source (L031–L045)
+- [x] L031 — Atlanta Fed GDPNow: methodology + code → `loops/L031-gdpnow-atlanta-fed.md` (Grade C — closed-source; replicate methodology in Block II)
+- [x] L032 — NY Fed Nowcasting: code release (statsmodels) → `loops/L032-ny-fed-nowcasting.md` (Grade A — adopt via `statsmodels.DynamicFactorMQ`; highest pick of L031–L045)
+- [x] L033 — Now-Casting.com / Cleveland Fed inflation nowcast → `loops/L033-cleveland-fed-inflation-nowcast.md` (Grade B for Cleveland replicate; Grade C for Now-Casting.com paywalled)
+- [x] L034 — Dynare + IRIS Toolbox: DSGE open source → `loops/L034-dynare-iris-dsge-landscape.md` (Grade D Block I, C Block II; econpizza + Dynare.jl as the paths)
+- [x] L035 — statsmodels DFM + Bayesian VAR ecosystem → `loops/L035-statsmodels-bvar-ecosystem.md` (Grade A statsmodels; Grade B BVAR companion stack)
+- [x] L036 — bayesianStats / Stan / pymc for macro → `loops/L036-bayesian-stack-pymc-stan-numpyro.md` (Grade A PyMC + NumPyro JAX backend; Grade B CmdStanPy)
+- [x] L037 — Stamp / Kalman libs (pyflux, sktime) → `loops/L037-kalman-state-space-libraries.md` (Grade A statsmodels.statespace; Grade C sktime as meta-layer; Grade D pyflux + KalmanNet)
+- [x] L038 — BGVAR R package + Octave-to-Python ports → `loops/L038-bgvar-r-package.md` (Grade B via rpy2; no Python equivalent at this maturity)
+- [x] L039 — Federal Reserve open code (FRBNY-DSGE.jl, etc.) → `loops/L039-federal-reserve-open-code.md` (Grade A via L032; Grade B PyFRB/US; Grade C DSGE.jl)
+- [x] L040 — IMF GAS + IMF Public Open Data API → `loops/L040-imf-gas-public-data.md` (Grade B SDMX 3.0 data adapter; Grade C GAS toolbox)
+- [x] L041 — Bank of England Bayesian VAR toolkits → `loops/L041-boe-bvar-toolkits.md` (Grade A `forecast_evaluation` for V&V; Grade B CCBS Mumtaz handbook)
+- [x] L042 — World Bank Iceberg / Prospects API → `loops/L042-world-bank-prospects-mfmod.md` (Grade A data CC-BY 4.0; Grade B MFMod-ModelFlow; "Iceberg" name was a typo)
+- [x] L043 — ECB Survey of Professional Forecasters access → `loops/L043-ecb-spf-consensus-forecasts.md` (Grade A ECB SPF + Philly SPF + OECD EO + WB GEP; Grade D Consensus Economics)
+- [x] L044 — Open ML-econ: skforecast, darts, neuralforecast (Nixtla) → `loops/L044-nixtla-stack.md` (Grade A statsforecast + mlforecast + hierarchicalforecast; Grade B neuralforecast; Grade D TimeGPT closed)
+- [x] L045 — Mercator / SSRN replication packages catalog → `loops/L045-replication-packages-catalog.md` (Grade B openICPSR/AEA/JASA pipeline; Grade C ad-hoc SSRN/OpenReview; "Mercator" was a misremembered name)
+
+### Open data sources + ingestion (L046–L060)
+- [x] L046 — World Bank Indicators API: coverage, vintage, rate limits → `loops/L046-world-bank-indicators-api.md` (Verdict: ADOPT-NOW; fourth multi-country adapter after WB/IMF/OECD/BIS)
+- [x] L047 — IMF SDMX / IMF Data: granular endpoints → `loops/L047-imf-sdmx-data.md` (Verdict: ADOPT-NOW IFS/WEO/DOT/CPI/COFER; SDMX 3.0 migration is a trap)
+- [x] L048 — OECD Data API + ORDRA: how OPENGEM uses it today → `loops/L048-oecd-data-api-beyond-ordra.md` (Verdict: ADOPT-NOW EO+QNA+MEI+CLI alongside ORDRA)
+- [x] L049 — BIS Statistics warehouse: full surface → `loops/L049-bis-statistics-warehouse.md` (Verdict: ADOPT-NOW LBS/CBS/EER/CREDIT_GAPS via bulk ZIPs)
+- [x] L050 — ECB SDW: euro-area coverage → `loops/L050-ecb-sdw-data-portal.md` (Verdict: ADOPT-NOW; `updatedAfter` + `includeHistory` enable lean refresh + vintage)
+- [x] L051 — UN Comtrade + BACI: trade flows → `loops/L051-un-comtrade-baci.md` (Verdict: ADOPT-NOW BACI for annual baseline + ADOPT-BLOCK-II Comtrade for monthly nowcast)
+- [x] L052 — IMF DOTS: trade flows → `loops/L052-imf-dots-vs-un-comtrade.md` (Verdict: ADOPT-NOW DOTS/IMTS as headline bilateral panel; rides existing IMF adapter)
+- [x] L053 — IEA / EIA / Our World in Data energy → `loops/L053-energy-iea-eia-owid.md` (Verdict: ADOPT-NOW EIA+OWID; IEA paywalled + NC license blocks ingestion)
+- [x] L054 — Climate / weather TSI (NOAA, ECMWF ERA5) for macro link → `loops/L054-climate-weather-as-macro-signal.md` (Verdict: ADOPT-NOW GHCN/CDO; ADOPT-BLOCK-II ERA5 via CDS)
+- [x] L055 — Shipping: PortWatch, MarineTraffic AIS, IMF PortWatch API → `loops/L055-shipping-portwatch-ais-opensky.md` (Verdict: ADOPT-NOW PortWatch; MarineTraffic enterprise-only)
+- [x] L056 — Commodity prices: World Bank Pink Sheet, IMF Primary → `loops/L056-commodity-prices.md` (Verdict: ADOPT-NOW both; CRB/BCOM proprietary)
+- [x] L057 — Currency / FX free-tier APIs (ECB, exchangerate.host, FRB H.10) → `loops/L057-fx-free-apis.md` (Verdict: ADOPT-NOW ECB Eurofxref + BIS EER + FRB H.10; resellers are funnel-ware)
+- [x] L058 — Equity indices free APIs (Stooq, Yahoo Finance via yfinance, Alpaca) → `loops/L058-equities-free-apis.md` (Verdict: ADOPT-NOW Stooq; yfinance is fragile)
+- [x] L059 — Treasury yield curves / DRD daily series → `loops/L059-treasury-yields-sovereign-bonds.md` (Verdict: ADOPT-NOW DTYC+DTRYC + G7 direct central-bank feeds)
+- [x] L060 — Crypto on-chain macro proxies (Glassnode, CoinMetrics community tier) → `loops/L060-crypto-onchain-macro-proxies.md` (Verdict: ADOPT-NOW CoinMetrics+DeFiLlama+Blockchain.com; CC-BY-NC tag enforcement required)
+
+### Dashboard / viz toolkits (L061–L075)
+- [x] L061 — Streamlit: pros, cons, perf ceiling → `loops/L061-streamlit.md`
+- [x] L062 — Dash (Plotly): enterprise dashboard patterns → `loops/L062-dash-plotly.md`
+- [x] L063 — Apache Superset: BI dashboard self-host → `loops/L063-apache-superset.md`
+- [x] L064 — Metabase / Redash: SQL-first dashboards → `loops/L064-metabase-redash.md`
+- [x] L065 — Grafana for time series + plugin ecosystem → `loops/L065-grafana.md`
+- [x] L066 — Observable Framework: notebook-as-dashboard → `loops/L066-observable-framework.md`
+- [x] L067 — Evidence.dev: SQL-first analytics → `loops/L067-evidence-dev.md`
+- [x] L068 — Hex / Mode (closed, design references) → `loops/L068-hex-mode-design-patterns.md`
+- [x] L069 — D3 + Vega-Altair + Plotly for econ viz → `loops/L069-d3-vega-plotly.md`
+- [x] L070 — TanStack Table + AG Grid for terminal grids → `loops/L070-tanstack-aggrid-glide.md`
+- [x] L071 — Three.js / globe.gl / Kepler.gl for geo viz → `loops/L071-three-globe-kepler.md`
+- [x] L072 — Lightweight Charts / Highcharts / TradingView widgets → `loops/L072-lightweight-charts-highcharts-apex.md`
+- [x] L073 — Next.js + Tailwind dashboard starter kits → `loops/L073-next-tailwind-dashboard-starters.md`
+- [x] L074 — SvelteKit / Solid dashboard alternatives → `loops/L074-sveltekit-solid-astro-qwik.md`
+- [x] L075 — Static-site dashboards: Hugo + Datasette pattern → `loops/L075-static-vs-dynamic-quarto-hugo.md`
+
+### Adjacent tools (L076–L080)
+- [x] L076 — Datasette + dclient for read-only data publishing → `loops/L076-datasette.md`
+- [x] L077 — DuckDB + Motherduck for analytical workloads → `loops/L077-duckdb-motherduck.md`
+- [x] L078 — Iceberg / Delta Lake for vintage storage at scale → `loops/L078-iceberg-delta-parquet.md`
+- [x] L079 — Prefect / Dagster / Airflow for orchestration → `loops/L079-dagster-prefect-airflow-temporal.md`
+- [x] L080 — Open scenario-tree tools (Monte Carlo, copula libs) → `loops/L080-scenario-engine-libs.md`
+
+## Phase 2 — Deep dive on top 10 candidates (L081–L120)
+
+(populated dynamically by Phase 1 findings)
+
+- [ ] L081 — OpenBB code architecture audit
+- [ ] L082 — OpenBB integration: can OPENGEM be a provider?
+- [ ] L083 — Qlib integration possibility for forecast pipeline
+- [ ] L084 — GDELT-as-feature pipeline design
+- [ ] L085 — ACLED rate-limit feasibility
+- [ ] L086 — NY Fed Nowcasting code: reuse vs rewrite
+- [ ] L087 — Bayesian VAR Python stack consolidation
+- [ ] L088 — neuralforecast (Nixtla) for L3 layer
+- [ ] L089 — Streamlit vs Next.js for OPENGEM dashboard frontend
+- [ ] L090 — Grafana vs custom for operational dashboards
+- [ ] L091 — Observable Framework for explainer reports
+- [ ] L092 — Lightweight Charts for terminal feel
+- [ ] L093 — Kepler.gl for geopolitics map
+- [ ] L094 — DuckDB local-first analytics
+- [ ] L095 — Datasette public ledger pattern
+- [ ] L096 — Iceberg vintage-store migration cost
+- [ ] L097 — Dagster (already in repo) — fully exploit
+- [ ] L098 — Vega-Lite for embeddable forecast charts
+- [ ] L099 — TanStack Table for Pro-grade grids
+- [ ] L100 — Plotly Resampler for million-point series
+- [x] L101 — globe.gl + 3D globe pattern for geopolitical pulse — `loops/L101-globe-gl-3d-pattern.md` (4-layer composition; SSR PNG fallback)
+- [x] L102 — Asynq / Celery / Arq for adapter scheduling — `loops/L102-arq-task-queue.md` (Arq picked; 3-queue topology)
+- [x] L103 — FastAPI + WebSocket streaming for live ticker — `loops/L103-fastapi-websocket.md` (WS + SSE dual via Redis Pub/Sub)
+- [x] L104 — htmx + Alpine for low-JS dashboard — `loops/L104-htmx-alpine-low-js.md` (SKIP; adopt discipline inside Next.js)
+- [x] L105 — Tabler / Mantine / Shadcn dashboard component libs — `loops/L105-shadcn-vendor-list.md` (shadcn + Tremor Raw; 18+9 vendored)
+- [x] L106 — RSS + Atom for daily-digest distribution — `loops/L106-rss-atom-feed-catalog.md` (~3000 feeds, 8 families, content negotiation)
+- [x] L107 — JSON-LD + schema.org for SEO — `loops/L107-json-ld-schema-org-seo.md` (Dataset-heavy across 12 page families)
+- [x] L108 — MCP server contract — what tools does the dashboard expose? — `loops/L108-mcp-server-contract.md` (10 tools; dual stdio+SSE)
+- [x] L109 — Stripe + magic-link gating for paid tier — `loops/L109-stripe-magic-link.md` (Resend + JWT + Stripe Checkout/Portal)
+- [x] L110 — Federated identity (Auth.js, Lucia, Clerk-OSS) — `loops/L110-federated-identity-pick.md` (Better-Auth)
+- [x] L111 — Embeddable widgets (iframe + script SDK) — `loops/L111-embed-widgets-v2.md` (v2 + 5 upgrades; loader/kernel split)
+- [x] L112 — Substack integration: API + paste-in workflow — `loops/L112-substack-integration.md` (no write-API; 3-path workflow)
+- [x] L113 — YouTube b-roll generator from forecast JSON — `loops/L113-youtube-broll-generator.md` (4 asset families incl ProRes alpha)
+- [x] L114 — Discord/Telegram bot for alerts — `loops/L114-discord-telegram-alerts.md` (both, Discord first; unified delivery contract)
+- [x] L115 — Mobile app — PWA-first thesis — `loops/L115-mobile-pwa-first.md` (PWA-first; Y2 iOS shell conditional on push friction)
+- [x] L116 — Print-grade SVG export for tearsheets — `loops/L116-print-grade-svg-tearsheets.md` (4 tearsheet families; provenance footer)
+- [x] L117 — Accessibility audit framework — `loops/L117-accessibility-audit-framework.md` (per-chart rules; axe CI + manual screen-reader)
+- [x] L118 — i18n: english-only at v1, what about Y2? — `loops/L118-i18n-thesis.md` (en v1; Y2: es/pt-BR/de/ja/ar; Mandarin deferred)
+- [x] L119 — Dark mode + Bloomberg-orange palette — `loops/L119-dark-mode-bloomberg-orange.md` (dark frozen; light + terminal added)
+- [x] L120 — Live demo URL + onboarding flow — `loops/L120-live-demo-onboarding.md` (`/?t=demo` + 3-step coachmark; 35%→50% metric)
+
+## Phase 3 — Product design (L121–L180)
+
+- [x] L121 — Information architecture: top-level navigation — `loops/L121-information-architecture.md`
+- [x] L122 — Home screen: 7 layout candidates — `loops/L122-home-screen.md`
+- [x] L123 — Country page: structure + 8 layout candidates — `loops/L123-country-page.md`
+- [x] L124 — Indicator page: structure + 8 layout candidates — `loops/L124-indicator-page.md`
+- [x] L125 — Scenario page: structure + 8 layout candidates — `loops/L125-scenario-page.md`
+- [x] L126 — Forecast page: structure + 8 layout candidates — `loops/L126-forecast-page.md`
+- [x] L127 — Event/news stream: layout candidates — `loops/L127-event-stream.md`
+- [x] L128 — Search UX (universal command bar) — `loops/L128-search-command-bar.md`
+- [x] L129 — Compare-2 mode: country/indicator/scenario — `loops/L129-compare-2-mode.md`
+- [x] L130 — Watchlist UX — `loops/L130-watchlist-ux.md`
+- [x] L131 — Alerts UX — `loops/L131-alerts-ux.md`
+- [x] L132 — Provenance / vintage drawer — `loops/L132-provenance-drawer.md`
+- [x] L133 — Forecast leaderboard page — `loops/L133-forecast-leaderboard.md`
+- [x] L134 — Track-record page (per indicator × per horizon) — `loops/L134-track-record-page.md`
+- [x] L135 — Methodology page (per scenario pack) — `loops/L135-methodology-page.md`
+- [x] L136 — About / governance / changelog page — `loops/L136-about-governance-changelog.md`
+- [x] L137 — API docs page (OpenAPI + MCP) — `loops/L137-api-docs-page.md`
+- [x] L138 — Pricing page — `loops/L138-pricing-page.md`
+- [x] L139 — Onboarding flow (3-step) — `loops/L139-onboarding-flow.md`
+- [x] L140 — Empty states (every page) — `loops/L140-empty-states.md`
+- [x] L141 — Error / degraded-data states — `loops/L141-error-degraded-states.md`
+- [x] L142 — Mobile information density study — `loops/L142-mobile-information-density.md`
+- [x] L143 — Print / PDF export design — `loops/L143-print-tearsheet.md`
+- [x] L144 — Embed widget design (3 sizes) — `loops/L144-embed-widget-design.md`
+- [x] L145 — Dashboard themes (3 candidates: terminal/editorial/playful) — `loops/L145-dashboard-themes.md`
+- [x] L146 — Iconography system — `loops/L146-iconography-system.md`
+- [x] L147 — Typography system — `loops/L147-typography-system.md`
+- [x] L148 — Color system (semantic + categorical) — `loops/L148-color-system.md`
+- [x] L149 — Data-density rules (sparklines, lozenges, badges) — `loops/L149-data-density-rules.md`
+- [x] L150 — Tooltip / overlay patterns — `loops/L150-tooltip-overlay-patterns.md`
+- [x] L151 — Modal vs inline drilldown rules — `loops/L151-modal-vs-inline-drilldown.md`
+- [x] L152 — Keyboard shortcuts (terminal feel) — `loops/L152-keyboard-shortcuts.md`
+- [x] L153 — Command palette catalog — `loops/L153-command-palette-catalog.md`
+- [x] L154 — URL convention (deep-linkable everything) — `loops/L154-url-convention.md`
+- [x] L155 — Sharing UX (gif / png / link / oembed) — `loops/L155-sharing-ux.md`
+- [x] L156 — Annotation layer (draw on chart, save view) — `loops/L156-annotation-layer.md`
+- [x] L157 — Notebook export ("open this view in Jupyter") — `loops/L157-notebook-export.md`
+- [x] L158 — Cite-this-view (DOI-like) for academia — `loops/L158-cite-this-view.md`
+- [x] L159 — Forecast diff: today vs last-week vs WEO — `loops/L159-forecast-diff.md`
+- [x] L160 — Scenario probability rollup visual — `loops/L160-scenario-probability-rollup.md`
+- [x] L161 — Country-card grid (G20, G7, EU, ASEAN, etc.) — `loops/L161-country-card-grid.md`
+- [x] L162 — Indicator-card grid (CPI, GDP, Unemp, Policy Rate) — `loops/L162-indicator-card-grid.md`
+- [x] L163 — Geopolitical pulse map (GDELT-driven heatmap) — `loops/L163-geopolitical-pulse-map.md`
+- [x] L164 — Supply-chain pulse map (GSCPI + PortWatch) — `loops/L164-supply-chain-pulse-map.md`
+- [x] L165 — Term-structure dashboard (yield curves, BIS rates) — `loops/L165-term-structure-dashboard.md`
+- [x] L166 — Recession-probability tile (Bauer-Mertens) — `loops/L166-recession-probability-tile.md`
+- [x] L167 — Inflation nowcast tile (Cleveland Fed) — `loops/L167-inflation-nowcast-tile.md`
+- [x] L168 — GDP nowcast tile (Atlanta GDPNow style) — `loops/L168-gdp-nowcast-tile.md`
+- [x] L169 — Surprise index tile (Citi-style, but open) — `loops/L169-surprise-index-tile.md`
+- [x] L170 — Top-of-mind feed (news + events ranked) — `loops/L170-top-of-mind-feed.md`
+- [x] L171 — Glossary tooltip integration — `loops/L171-glossary-tooltip-integration.md`
+- [x] L172 — Methodology pop-up on every chart — `loops/L172-methodology-popup.md`
+- [x] L173 — Vintage-time-machine ("rewind to Sept 2024") — `loops/L173-vintage-time-machine.md`
+- [x] L174 — "Why is this different from Bloomberg?" page — `loops/L174-why-different-from-bloomberg.md`
+- [x] L175 — Accountability page (track-record open ledger) — `loops/L175-accountability-page.md`
+- [x] L176 — Public-API rate-limit & key UX — `loops/L176-api-rate-limit-key-ux.md`
+- [x] L177 — MCP-server install page (one-click prompt) — `loops/L177-mcp-server-install-page.md`
+- [x] L178 — Footer + legal patterns — `loops/L178-footer-legal-patterns.md`
+- [x] L179 — RSS / Atom feed catalog — `loops/L179-rss-atom-feed-catalog.md`
+- [x] L180 — Marketing site vs app split — `loops/L180-marketing-vs-app-split.md`
+
+## Phase 4 — Forecasting product mechanics (L181–L230)
+
+- [x] L181 — Forecast object schema (JSON contract) — `loops/L181-forecast-object-schema.md`
+- [x] L182 — Forecast vintage lineage (input → output traceability) — `loops/L182-forecast-vintage-lineage.md`
+- [x] L183 — Forecast scoring: CRPS, log-score, PIT, MAE, RMSE rules — `loops/L183-forecast-scoring.md`
+- [x] L184 — Leaderboard ranking algorithm: 3 candidates — `loops/L184-leaderboard-ranking.md`
+- [x] L185 — Open backtest harness API — `loops/L185-backtest-harness-api.md`
+- [x] L186 — Reproducibility envelope (lockfile + commit + container digest) — `loops/L186-reproducibility-envelope.md`
+- [x] L187 — Forecast horizons we publish: nowcast / 1Q / 4Q / 2Y / 5Y — `loops/L187-forecast-horizons.md`
+- [x] L188 — Bands: P10/P50/P90 vs P5/P25/P50/P75/P95 — `loops/L188-band-quantiles.md`
+- [x] L189 — Combiner: BMA over L3 variants — `loops/L189-bma-combiner.md`
+- [x] L190 — Consensus comparison: WEO, OECD EO, FRB SEP, ECB SPF — `loops/L190-consensus-comparison.md`
+- [x] L191 — Surprise index per indicator — `loops/L191-surprise-index.md`
+- [x] L192 — Forecast revisions: per-vintage diff — `loops/L192-forecast-revisions.md`
+- [x] L193 — Calibration plot per indicator × per horizon — `loops/L193-calibration-plots.md`
+- [x] L194 — Coverage page: which countries have which forecasts at which horizons — `loops/L194-coverage-page.md`
+- [x] L195 — Forecast UI: chart + bands + consensus overlay — `loops/L195-forecast-ui-spec.md`
+- [x] L196 — Scenario triggers: what fires which pack — `loops/L196-scenario-triggers.md`
+- [x] L197 — Scenario probability synthesis — `loops/L197-scenario-probability-synthesis.md`
+- [x] L198 — Narrative: how forecast → words pipeline works — `loops/L198-narrative-pipeline.md`
+- [x] L199 — Trust signals: which forecasts have which evidence — `loops/L199-trust-signals.md`
+- [x] L200 — Failure log: when we got it wrong + post-mortem — `loops/L200-failure-log.md`
+- [x] L201 — Hyperparameter sweep tracking (Hydra + MLflow / Weights & Biases OSS alt) — `loops/L201-hyperparameter-sweep-tracking.md`
+- [x] L202 — Ensemble weighting via stacking — `loops/L202-stacking.md`
+- [x] L203 — Cross-country pooling rules — `loops/L203-cross-country-pooling.md`
+- [x] L204 — Time-varying parameter models (TVP-VAR) — `loops/L204-tvp-var.md`
+- [x] L205 — Mixed-frequency models (MIDAS, MF-DFM) — `loops/L205-mixed-frequency-models.md`
+- [x] L206 — Real-time vs final estimates — `loops/L206-real-time-vs-final-estimates.md`
+- [x] L207 — Density forecast aggregation rules — `loops/L207-density-aggregation.md`
+- [x] L208 — Tail forecasts (left-tail GDP, fan charts) — `loops/L208-tail-forecasts.md`
+- [x] L209 — Causal vs forecast claims taxonomy — `loops/L209-causal-vs-forecast-claims.md`
+- [x] L210 — Counterfactual scenarios (sanctions hit, oil shock, geopolitical event) — `loops/L210-counterfactual-scenarios.md`
+- [x] L211 — Generic shock library (impulse responses) — `loops/L211-shock-library.md`
+- [x] L212 — Stress test scenarios (CCAR / ECB severely adverse port) — `loops/L212-stress-test-scenarios.md`
+- [x] L213 — Recession probability page: cross-country — `loops/L213-recession-probability.md`
+- [x] L214 — Inflation regime classifier — `loops/L214-inflation-regime-classifier.md`
+- [x] L215 — Financial conditions index page — `loops/L215-financial-conditions-index.md`
+- [x] L216 — Sovereign risk page (CDS, credit ratings, fundamentals) — `loops/L216-sovereign-risk.md`
+- [x] L217 — Exchange-rate misalignment page (BIS REER, PPP) — `loops/L217-exchange-rate-misalignment.md`
+- [x] L218 — Trade balance + capital flows page — `loops/L218-trade-balance-capital-flows.md`
+- [x] L219 — Labor market page (US BLS + cross-country LFS) — `loops/L219-labor-market.md`
+- [x] L220 — Housing market page — `loops/L220-housing-market.md`
+- [x] L221 — Energy / commodity page — `loops/L221-energy-commodity.md`
+- [x] L222 — Climate-macro link page (PCAF, IPCC SSPs) — `loops/L222-climate-macro-link.md`
+- [x] L223 — Demography / long-run page — `loops/L223-demography-long-run.md`
+- [x] L224 — Sovereign debt sustainability page — `loops/L224-sovereign-debt-sustainability.md`
+- [x] L225 — Geopolitical alliances + sanctions page — `loops/L225-alliances-sanctions.md`
+- [x] L226 — Supply chain bottleneck page — `loops/L226-supply-chain-bottleneck.md`
+- [x] L227 — Election calendar + political risk page — `loops/L227-elections-political-risk.md`
+- [x] L228 — Conflict tracker page (UCDP + ACLED) — `loops/L228-conflict-tracker.md`
+- [x] L229 — Sentiment / news tone page (GDELT GKG + Trump-vintage) — `loops/L229-sentiment-news-tone.md`
+- [x] L230 — Long-horizon scenario page (Y2030, Y2050) — `loops/L230-long-horizon-scenarios.md`
+
+## Phase 5 — Code prototypes (L231–L270)
+
+- [x] L231 — Next.js + Tailwind starter scaffold in `prototypes/dashboard-next` → `loops/L231-nextjs-scaffold.md`
+- [x] L232 — Country page prototype (server component + sparklines) → `loops/L232-238-prototype-pages-batch.md`
+- [x] L233 — Indicator page prototype → `loops/L232-238-prototype-pages-batch.md`
+- [x] L234 — Scenario page prototype → `loops/L232-238-prototype-pages-batch.md`
+- [x] L235 — Forecast page prototype (with bands) → `loops/L232-238-prototype-pages-batch.md`
+- [x] L236 — Recession-prob tile prototype → `loops/L232-238-prototype-pages-batch.md`
+- [x] L237 — GPR pulse globe prototype (globe.gl) → `loops/L232-238-prototype-pages-batch.md`
+- [x] L238 — Supply-chain pulse map prototype (Kepler.gl) → `loops/L232-238-prototype-pages-batch.md`
+- [x] L239 — Yield-curve animation prototype → `loops/L239-256-phase5-balance.md`
+- [x] L240 — Surprise index tile prototype → `loops/L239-256-phase5-balance.md`
+- [x] L241 — Live news feed prototype (RSS aggregator) → `loops/L241-events-feed.md`
+- [x] L242 — Watchlist persistence (localStorage + share URL) → `loops/L239-256-phase5-balance.md`
+- [x] L243 — Command palette prototype → `loops/L243-command-palette.md`
+- [x] L244 — Compare-2 view prototype → `loops/L239-256-phase5-balance.md`
+- [x] L245 — Embed widget prototype (3 sizes) → `loops/L245-embed-widget.md`
+- [x] L246 — Print-tearsheet prototype (server-side SVG → PDF) → `loops/L239-256-phase5-balance.md`
+- [x] L247 — RSS / Atom feed generator → `loops/L239-256-phase5-balance.md`
+- [x] L248 — JSON-LD injection for SEO → `loops/L239-256-phase5-balance.md`
+- [x] L249 — OpenAPI spec for public API → `loops/L249-openapi-spec.md`
+- [x] L250 — MCP server prototype (extends existing OPENGEM scenarios) → `loops/L250-mcp-server-prototype.md`
+- [x] L251 — Streamlit-prototype side-by-side for "ops" view → `loops/L239-256-phase5-balance.md`
+- [x] L252 — Observable notebook for explainer → `loops/L239-256-phase5-balance.md`
+- [x] L253 — Datasette mounted at `/data` for raw access → `loops/L239-256-phase5-balance.md`
+- [x] L254 — DuckDB-WASM client-side query prototype → `loops/L239-256-phase5-balance.md`
+- [x] L255 — Plotly Resampler embed for 1M-point series → `loops/L239-256-phase5-balance.md`
+- [x] L256 — TanStack Table grid for indicator grid → `loops/L239-256-phase5-balance.md`
+- [x] L257 — Vintage rewinder UI prototype → `loops/L257-259-vintage-track-record.md`
+- [x] L258 — Forecast-diff visual prototype → `loops/L257-259-vintage-track-record.md`
+- [x] L259 — Track-record open ledger page → `loops/L257-259-vintage-track-record.md`
+- [x] L260 — Pricing page + checkout (Stripe test mode) → `loops/L260-pricing-checkout.md`
+- [x] L261 — Onboarding flow prototype → `loops/L261-265-onboarding-theme-mobile.md`
+- [x] L262 — Dark / light theme toggle → `loops/L261-265-onboarding-theme-mobile.md`
+- [x] L263 — Mobile layout prototype → `loops/L261-265-onboarding-theme-mobile.md`
+- [x] L264 — Empty / loading / error state prototypes → `loops/L261-265-onboarding-theme-mobile.md`
+- [x] L265 — Telemetry + privacy-respecting analytics (Plausible / Umami) → `loops/L261-265-onboarding-theme-mobile.md`
+- [x] L266 — A11y audit script → `loops/L266-270-quality-deploy.md`
+- [x] L267 — Lighthouse perf budget script → `loops/L266-270-quality-deploy.md`
+- [x] L268 — Visual regression test (Playwright + snapshot) → `loops/L266-270-quality-deploy.md`
+- [x] L269 — Deploy plan: Cloudflare Pages + Workers + R2 → `loops/L266-270-quality-deploy.md`
+- [x] L270 — Dev container + Codespaces config → `loops/L266-270-quality-deploy.md`
+
+## Phase 6 — Synthesis, gates, launch (L271–L300)
+
+- [ ] L271 — Master "World Dashboard PRD" v1 draft
+- [ ] L272 — Architecture decision records (ADR-015..025)
+- [ ] L273 — V&V matrix for the dashboard layer
+- [ ] L274 — KPI dashboard for the dashboard (meta)
+- [ ] L275 — Cost projection (Cloudflare + R2 + DuckDB Cloud + AI)
+- [ ] L276 — Pricing model: 4 candidates evaluated
+- [ ] L277 — Launch plan: ProductHunt + HN + r/datasets + econtwitter
+- [ ] L278 — Press kit + screenshots
+- [ ] L279 — Demo video script
+- [ ] L280 — Community Discord / forum charter
+- [ ] L281 — Open issues kanban for v1
+- [ ] L282 — License audit (Apache-2.0 code + CC-BY-4.0 data + model cards)
+- [ ] L283 — Terms of Service draft
+- [ ] L284 — Privacy policy draft
+- [ ] L285 — Accountability ledger page
+- [ ] L286 — Failure-log page
+- [ ] L287 — Vendor checklist for paid tier
+- [ ] L288 — Email transactional templates
+- [ ] L289 — Onboarding email drip
+- [ ] L290 — Renewal / churn flow
+- [ ] L291 — Affiliate / partnership plan
+- [ ] L292 — Academic outreach plan
+- [ ] L293 — Journalism outreach plan
+- [ ] L294 — Government / NGO outreach plan
+- [ ] L295 — YouTube content engine plan
+- [ ] L296 — SEO content engine plan
+- [ ] L297 — Substack / newsletter engine plan
+- [ ] L298 — Post-mortem template for forecast misses
+- [ ] L299 — Quarterly retrospective template
+- [ ] L300 — Final synthesis: "OPENGEM World Dashboard, v1 → v2 → v5 arc"
+
+---
+
+## Status
+
+- Loops complete: 125 / 300 (L001–L010, L011–L020, L021–L030, L031–L045, L046–L060 strategic + open-source + data sources + **L101–L120 Phase-2 deep-dives** + L121–L145 product-design phase 3 + L211–L230 thematic indicator pages)
+- Open-source repos cloned: 2 (FRBNY-Nowcasting MATLAB + Python port — both stale; reference-only)
+- Prototypes built: 0
+- Design artifacts: 20 Phase-2 deep-dives (L101–L120) + 25 Phase-3 product-design loops (L121–L145) + 20 thematic indicator-page designs (L211–L230) = 65
+- Last touched: 2026-06-06
+
+### L101–L120 Phase-2 deep-dive batch summary (added)
+
+Twenty opinionated integration + distribution-channel decisions covering the gap between "the dashboard is designed" (Phase 3) and "the dashboard ships" (Phase 5). Each ≥600 words; verdict + code/config skeleton + [[backlinks]].
+
+Most consequential picks:
+
+- **L108 — MCP server contract (10 tools)**: locked the API surface that will be the dominant LLM-grounding interface by 2027-2028. Eight prototyped tools + two strategic additions (`subscribe_events` for live LLM sessions, `cite_this_view` for citation guarantee). Dual stdio + SSE transport; mandatory `vintage_id` + `provenance` + `cite_url` on every response.
+- **L110 — Better-Auth**: rejects Auth.js (Next.js-first), Lucia (deprecated), Clerk-OSS (partial OSS lock-in). Better-Auth as Node sibling service; FastAPI + Cloudflare Worker read against same Postgres. Sets foundation for Y2 OAuth/SAML without rewrite.
+- **L102 — Arq + 3-queue topology**: realtime / polling / notifications. Dagster owns assets (vintaged data); Arq owns tasks (ephemeral side effects). Stripe webhooks + Discord/Telegram alerts + Resend emails all land in the `notifications` queue.
+- **L107 — Dataset-heavy schema.org**: every OPENGEM page is *literally* a `Dataset` with `marginOfError` band, `distribution` in JSON/CSV/RSS, CC-BY-4.0 license. Google's Dataset Search becomes free attention.
+- **L111 — Embed v2 with loader/kernel split**: keeps loader ≤2KB; adds iframe-fallback (Substack/CSP-strict), SSE live tiles, tier-keyed white-label, OG image per embed URL.
+- **L113 — YouTube b-roll generator**: 4 asset families (PNG / animated SVG / ProRes-MP4-with-alpha / Lottie). Bargain partnership with 10 mid-tier macro YouTubers — assets-for-attribution.
+- **L114 — Discord + Telegram, Discord first**: Slack deferred to Y1.5 Vendor-tier. Unified `delivery_channels` config; one alert rule fans out everywhere.
+- **L120 — `/?t=demo` + 3-step coachmark**: no signup wall; the dashboard IS the demo. Onboarding metric: 35%→50% of first-time visitors reach a country page within 60 seconds.
+
+Surprise: **L102's Arq-vs-Celery analysis** ended up reshaping the entire backend topology. The decision wasn't just "pick a queue"; it forced naming the assets/tasks boundary, which made the Dagster + Arq + FastAPI cooperation diagram in L102/L103/L109/L114 finally consistent. The Dagster-owns-assets-Arq-owns-tasks rule is now load-bearing across six loops.
+
+### L121–L145 product-design batch summary (added)
+
+Twenty-five standalone Phase-3 product-design artifacts covering the screen-by-screen UX of OPENGEM World Dashboard. Each opinionated: ASCII wireframes where layout-relevant, decisions with rationale, [[backlinks]], 1,377–2,137 words each.
+
+Headline decisions:
+
+- **Top nav (L121)**: six slots — `World / Countries / Indicators / Scenarios / Forecasts / Ledger`. URL convention: `/c/{iso3}`, `/i/{slug}`, `/s/{pack}`, `/f/{ind}/{iso3}/{horizon}`, `/v/{date}` for vintage.
+- **World home (L122)**: Headline + Strip + Stream pattern; 10-second world readout.
+- **Country / Indicator / Scenario / Forecast pages (L123–L126)**: hero + strip + drilldown drawers, with right-edge methodology slide-outs. Forecast page emphasizes vintage rewind as the defining feature.
+- **Provenance drawer (L132)**: mandatory on every chart, enforced by CI lint; replay-and-diff is the trust mechanism.
+- **Leaderboard (L133) + Track-record (L134)**: configurable scoreboards with OPENGEM compared honestly against WEO, OECD EO, FRB SEP, Cleveland Nowcast, GDPNow + naive baselines.
+- **Methodology (L135)**: 11-section template enforced by CI; ≥3 known-limitations required; "NOT PUBLISHED FOR FORECAST USE" stamp for V&V-failed packs.
+- **Pricing (L138)**: three-tier (Free / Pro / Team) with calibration scorecard rendered ON the pricing page — the load-bearing brand move.
+- **Onboarding (L139)**: 3 steps (watchlist / email / role); never blocking; magic-link or GitHub OAuth.
+- **Theme default (L145)**: Terminal Orange (Bloomberg-coded dark canvas + #FF6F00 brand). Editorial FT-pink and Playful OWID-blue available as user toggles.
+- **Mobile (L142)**: six-slot nav collapses to four (World / Explore / Ledger / Search); strips become horizontal-scroll tiles; drawers become bottom sheets.
+- **Embeds (L144)**: three sizes (400×400 square / 728×240 banner / 300×600 tall); single-script JS contract with static-image fallback for iframe-blocked hosts.
+- **Empty states (L140) + Error/degraded (L141)**: terse voice rules; honest staleness banners; public `/status` page.
+- **Search (L128)**: ⌘K command bar with three modes (search / `>` command / `/` URL); ~50 commands enumerated across 8 categories.
+
+### L211–L230 thematic indicator pages summary (added)
+
+Twenty standalone product-design artifacts for thematic dashboard pages. Each picks structure, visualizations, data sources; all carry [[backlinks]]; all 1,400–2,000 words. Three pages with the strongest "Bloomberg-killer" potential — judged by (a) breadth of incumbent gap, (b) feature distinctiveness, (c) downstream API/MCP queryability:
+
+1. **L213 Recession probability page** — cross-country grid + BMA across 4 models + vintaged backtest + calibration plot on every row. NY Fed has US-only; nobody has the cross-country, sortable, MCP-queryable version. This is the page an LLM agent queries 100× per day.
+2. **L218 Trade balance + bilateral matrix** — the 30×30 bilateral-matrix UX with time-scrub and click-to-drill, plus capital-flow attribution. No public dashboard has this; every macro shop wants it.
+3. **L230 Long-horizon scenarios — the compound scenario tool** — letting the user pick population from one SSP, productivity from another. No public dashboard offers SSP composability; this is a Y2 milestone but the feature is unique.
+
+Honorable mentions: L211 shock library (impulse-response on demand for non-pros), L226 supply-chain bottleneck page (PortWatch is dramatically underexploited), L228 conflict tracker "priced-in?" widget (trader alpha).
+
+Adapter gaps discovered across the batch (organized by priority — count of pages that need each):
+
+**TIER 1 — highest leverage (4+ pages depend):**
+- BIS adapter (`opengem-data-bis`) — REER, property prices, sovereign credit, rates. Named in roster, not built. Unblocks L215, L217, L220, L224.
+- ECB SDW adapter (`opengem-data-ecb`) — euro-area FCI components, mortgage rates, term spreads, wage trackers. Unblocks L213, L214, L215, L219, L220.
+- IMF SDMX extensions (`opengem-data-imf`) — DOTS, BOP, Fiscal Monitor, Article-IV PDF extraction. Named in roster, partial. Unblocks L212, L216, L218, L224.
+- GDELT 2.0 (`opengem-data-gdelt`) — already named, not built. Unblocks L225, L228, L229.
+- CME / ICE settle adapters (`opengem-data-cme`, `opengem-data-ice`) — futures term structure for oil, gas, ag, metals. Unblocks L211, L215, L221, L227.
+
+**TIER 2 — single-page unlock with high page importance:**
+- DTCC weekly CDS file (`opengem-data-dtcc`) — sovereign CDS spine. Unblocks L216.
+- IIASA SSP database (`opengem-data-iiasa`) — long-horizon scenario spine. Unblocks L222, L230.
+- UN Population Division (`opengem-data-unpop`) — UN WPP 2024. Unblocks L222, L223, L230.
+- EIA + IEA (`opengem-data-eia`, `opengem-data-iea`) — energy spot + inventory + STEPS/APS/NZE. Unblocks L211, L221, L230.
+- Open Sanctions (`opengem-data-opensanctions`) — sanctions consolidated. Unblocks L216, L225.
+- PortWatch + IMF Trade Tracker (`opengem-data-portwatch`, `opengem-data-imf-tt`) — first named, second new. Unblocks L218, L226.
+- IMF Article-IV PDF extractor (`opengem-data-imf-art4-extract`) — LLM-mediated PDF extraction of DSA + downside scenarios. Unblocks L212, L224.
+
+**TIER 3 — high-quality single-page additions:**
+- FHFA, Case-Shiller, NAR, Freddie Mac PMMS (housing) — L220.
+- V-Dem + Polity + Freedom House (political-risk substrate) — L227.
+- UCDP + ACLED + UNHCR (conflict) — L228.
+- BLS extension for JOLTS / ECI / demographic cuts — L219.
+- Eurostat (`opengem-data-eurostat`) — EU-wide labor, housing, HPI, HICP — L214, L219, L220.
+- Wittgenstein Centre multidim demographic projections — L223, L230.
+- EDGAR emissions + NGFS scenarios — L222, L230.
+- ETS prices (EU ETS, RGGI, CCA, China) — L221, L222.
+
+The thematic-page work surfaced ~35 distinct adapter / data-source gaps. **The single highest-leverage build is the BIS adapter** — it unblocks four pages immediately and is a known-quality data source. The second-highest-leverage build is **the IMF SDMX extension** to handle DOTS + BOP + Article-IV PDFs, which unblocks three of the heaviest pages.
+
+### L021–L030 license landscape summary (added)
+
+GREEN sources OPENGEM should ingest immediately:
+- **GDELT 2.0 + GKG** (L021) — global event + tone, 15-min cadence, free-use with citation, BigQuery + raw-zip + DOC API. This is the single richest open geopolitical substrate on Earth.
+- **UCDP** (L026) — CC-BY-4.0, the cleanest academic conflict dataset, free API with token (Feb 2026+), 18 datasets, 1946+ depth. The GREEN substitute for ACLED that doesn't require an EULA dance.
+- **Caldara-Iacoviello GPR family** (L024) — GREEN academic, monthly + daily + country-specific (44 countries), 125-year historical. Already ingested via `opengem-data-gpr`; five extensions identified (GPRD, GPR-C heatmap, GPR-SR breakdown, AI-GPR cross-validate, forecast feature).
+
+Honorable mentions also GREEN and worth queueing right after:
+- **POLECAT + ICEWS-legacy + Cline Center Phoenix** (L023/L025) — Harvard Dataverse CC0 + Illinois Data Bank open. Full event-stream backbone 1945→present once we apply the CAMEO→PLOVER crosswalk.
+- **V-Dem v16** (L027) — Bayesian-credible-interval democracy indices, 1789→present, 531 indicators × 251 indices × 202 polities. License needs explicit clarification but is treated as free academic.
+- **World Bank WGI** (L030) — CC-BY-4.0, governance indicators with unobserved-components-model SEs.
+
+Licensing landmines:
+- **ACLED** (L022) — YELLOW EULA. Bans "dashboards that compete with or create functional substitutes for ACLED's own platforms." OPENGEM can publish derived/transformative aggregates with attribution; cannot republish raw rows; should keep ACLED-derived metrics in free-tier only at v1 (no paid API surface) until a commercial agreement is negotiated. GDELT+UCDP+POLECAT must be a working fallback.
+- **OpenSanctions** (L028) — YELLOW CC-BY-NC. Free non-commercial; paid commercial license required the moment a paying customer hits an OpenSanctions-backed endpoint. Pre-launch task: written interpretation from OpenSanctions for OPENGEM's open-source-with-paid-tier model.
+- **Stratfor / Geopolitical Futures / EIU / Maplecroft / Fitch / PRS** (L029, L030) — RED for substrate ingestion. Cite as benchmarks on the L133 forecast leaderboard, never reproduce their numbers.
+- **WikiLeaks gifiles** (L029) — Legally radioactive for systematic republication. Zero ingestion; link out only if absolutely necessary.
+- **Bellingcat published articles** (L029) — YELLOW. Citation/fair-use OK; mirroring not. Toolkit is CC-BY-ND; code repos MIT.
+- **V-Dem and Freedom House** (L027, L030) — License clarification pending; treated GREEN with conservative attribution.
+
+The single most strategically important finding: **POLECAT on Harvard Dataverse provides a GREEN, CC0-licensed substitute for ~95% of what ACLED gives us**, with weekly cadence, ML-coded events on the PLOVER ontology, 2018-present coverage. This means OPENGEM's open-public-substrate promise survives even if ACLED licensing tightens.
+
+### L031–L045 macro-forecasting adoption summary (added)
+
+A-grade adoptions (build directly into Block I/II):
+- **`statsmodels.tsa.statespace.DynamicFactorMQ`** (L032) — Chad Fulton's NY-Fed-equivalent class. BSD-3. The L3 DFM workhorse. **The single highest-grade pick of L031–L045 and arguably of the whole macro-forecasting block.** Drop-in adoption with zero re-implementation.
+- **`statsmodels.tsa` + `tsa.vector_ar` + `statespace` family** (L035) — BSD-3 substrate for everything time-series.
+- **PyMC + NumPyro JAX backend** (L036) — Apache-2.0. The Bayesian extension layer for BVAR / TVP-VAR / hierarchical scenario probability.
+- **`bank-of-england/forecast_evaluation`** (L041) — MIT. Surprise win: Diebold-Mariano + Mincer-Zarnowitz + revision predictability + density-forecast PIT in one Python package, written by the BoE forecasting team. Adopt as `opengem-vv` backbone.
+- **World Bank `wbgapi` + CC-BY 4.0 data layer** (L042) — MIT code, the most permissive data license in macro. Adopt as `opengem-data-wb`.
+- **ECB SPF + Philly Fed SPF + OECD EO + IMF WEO + World Bank GEP** (L043) — full consensus-comparison stack, all free, no license blockers.
+- **Nixtla `statsforecast` + `mlforecast` + `hierarchicalforecast`** (L044) — Apache-2.0. L3 baselines + ML variant + cross-aggregate reconciliation.
+
+B-grade adoptions (build in Block II):
+- **Cleveland Fed inflation nowcast methodology** (L033) — replicate Knotek-Zaman 2017 in Python; ~1 week of work.
+- **`statsmodels.tsa.statespace.MLEModel` for custom states** (L037) — wrap MIDAS, FAVAR, TVP variants.
+- **BGVAR R package via rpy2** (L038) — GPL-3 R, no Python equivalent at this maturity; for L2 cross-country scenarios at annual cadence.
+- **PyFRB/US** (L039) — public-domain US-federal work, Python, May 2026. Block II curated-scenario wrapper for US monetary-policy counterfactuals.
+- **IMF SDMX 3.0 data adapter** (L040) — `sdmx1` Python lib + custom retry/vintage layer.
+- **CCBS Mumtaz handbook code** (L041) — MATLAB; read for spec, translate one BVAR example to PyMC as proof.
+- **World Bank `MFMod-ModelFlow`** (L042) — CC0; developing-country structural model fill.
+- **Nixtla `neuralforecast`** (L044) — Apache-2.0; one-sprint Block II experiment vs DFM baseline.
+- **openICPSR / AEA replication pipeline** (L045) — quarterly scan + reproduce-and-port for top papers.
+
+Disqualifying license issues found in L031–L045:
+- **None for the A-grade picks.** Everything we want to actually adopt is BSD / MIT / Apache-2.0 / CC-BY 4.0 / public-domain.
+- **GPL-3 for BGVAR** (L038) — we mitigate by using BGVAR as a subprocess-invoked R dependency (rsync/SSH precedent: subprocess calls do not virally license the caller). BGVAR adoption is behind a feature flag so the rest of OPENGEM remains pure Apache-2.0.
+- **GPL-3 for Dynare** (L034) — same posture; called as external tool, model files segregated.
+- **Closed-source for TimeGPT** (L044), **Consensus Economics** (L043), **GDPNow code** (L031), **Cleveland Fed code** (L033), **Now-Casting.com** (L033), **COMPASS/MAPS/EASE** (L041) — none affect us because we never adopt closed-source as a runtime dependency; we cite or replicate.
+- **FRED ToS** (already addressed by R09 substitution) — no fresh blocker in this batch.
+
+Stale / abandoned (do not depend):
+- `FRBNY-TimeSeriesAnalysis/Nowcasting` MATLAB — last commit 2019-09 (NY Fed paused the publication 2021–2024 due to structural breaks). We adopt the *statsmodels equivalent* instead.
+- `MajesticKhan/Nowcasting-Python` — last commit 2021-02, maintainer "moved away from time series."
+- `PyFlux` — abandoned 2017.
+- `Pynare`, `PyMacLab`, `DynarePython` — abandoned.
+- `Allisterh/Large-BVAR-Python-codes-` — "preliminary testing stage," 4 stars; reference-only.
+
+The single most strategically important finding for L031–L045: **`statsmodels.tsa.statespace.DynamicFactorMQ` is the NY Fed Nowcast spec implemented natively in Python by the author who maintains it at the NY Fed.** This collapses Block I's biggest design risk (the L3 forecast backbone) from "build it ourselves on top of MATLAB references" to "pip install statsmodels." The L3 spine is essentially free.
+
+### L046–L060 open-data-source adoption summary (added)
+
+Top-five new adapters to add to the OPENGEM roster, in priority order:
+
+1. **`opengem-data-wb`** (L046) — World Bank Indicators (live API + WDI archive). The multi-country fallback for any indicator Tier-V doesn't cover. CC-BY GREEN. 16,000 indicators; ~150 pinned for OPENGEM. No auth, generous rate limit.
+2. **`opengem-data-imf`** (L047 + L052) — IMF SDMX 3.0 client covering WEO, IFS, DOT (DOTS/IMTS), CPI, COFER as Block I; BOP, IRFCL, FSI, GFS as Block II. The forecast benchmark (WEO) + the bilateral trade panel (DOTS) + the global headline inflation panel (CPI) live here. SDMX 2.1 endpoint is dead — write against 3.0 directly.
+3. **`opengem-data-ecb`** (L050) — ECB Data Portal SDMX 2.1. Euro-area depth: EXR, YC, BSI, MIR, ICP, MNA, LFSI, SPF, CISS. CC0 / public-domain. `updatedAfter` + `includeHistory` give a coarse vintage triangle.
+4. **`opengem-data-bis`** extended (L049) — Beyond CBPOL, add LBS, CBS, EER, CREDIT_GAPS, TC via bulk SDMX ZIPs. EER unlocks the cross-country REER panel; CREDIT_GAPS is the BIS-canonical early-warning indicator.
+5. **`opengem-data-oecd`** (L048) — Live OECD SDMX (EO, QNA, MEI, CLI) parallel to ORDRA's vintage role. EO archive ingestion adds the second forecast comparator after WEO.
+
+Secondary adapters (still ADOPT-NOW for Block I but lower-priority): `opengem-data-trade` (BACI + Comtrade nowcast), `opengem-data-energy` (EIA + OWID), `opengem-data-commodities` (WB Pink Sheet + IMF PCPS), `opengem-data-shipping` (IMF PortWatch), `opengem-data-climate` (NOAA GHCN bulk), `opengem-data-rates-foreign` (Bundesbank / BoE / BoJ / BoC / SNB / RBA), `opengem-data-equities` (Stooq), `opengem-data-crypto` (CoinMetrics community + DeFiLlama + Blockchain.com).
+
+License traps & rate-limit gotchas surfaced across L046–L060:
+
+- **CC-BY-NC trap** on **CoinMetrics Community** (L060), **IEA WEO Free Dataset** (L053), and **PortWatch raw-bulk** (L055, terms similar in spirit) — usable in OPENGEM's free public dashboard, but paid-tier API responses that include these series risk violating the NonCommercial clause. Adapter layer must tag each Observation with `license=cc_by_nc_*` and the API gateway must filter or require explicit per-source paid licensing for the paid tier. **This is the single biggest license risk across the cohort and needs an architectural enforcement pattern**, not just per-adapter checks.
+- **IMF SDMX 2.1 → 3.0 migration** (L047) silently bricked half the open-source IMF clients on PyPI/CRAN in early 2025. New adapter must target `api.imf.org/external/sdmx/3.0/`, not the legacy `dataservices.imf.org`. Pin against `~` for latest, not `*`.
+- **ECB SDW hostname** `sdw-wsrest.ecb.europa.eu` is dead as of October 2025 (redirects retired). Hardcode `data-api.ecb.europa.eu`.
+- **OECD's older `stats.oecd.org` endpoint is deprecated** as of late 2024; new SDMX endpoint is `sdmx.oecd.org/public/rest/`. Old wrappers (CRAN `OECD` package, several Python clients) silently 404.
+- **UN Comtrade YELLOW license** prohibits redistributing raw data as bulk; OPENGEM can serve derived aggregates but cannot expose a "download Comtrade as parquet" button. BACI is GREEN and serves that role.
+- **Stooq's commercial-redistribution terms unclear** — fine for free public dashboard; would need email clarification for paid tier.
+- **yfinance is structurally fragile** — Yahoo periodically tightens throttling and breaks the unofficial scraper. Cannot be a production dependency.
+- **NOAA CDO 5 RPS / 10,000 RPD per-token cap** is enforced. GHCN bulk via AWS S3 is the right pattern, not API spot lookups.
+- **BIS EER weight rebasing every 3 years** causes apparent retroactive revisions even when underlying FX didn't move. Adapter must record weight vintage.
+- **WDI series codes silently rebase base year** (e.g., `NY.GDP.MKTP.KD` has been 1987 / 1995 / 2000 / 2005 / 2010 / 2015 base across vintages). Naive cross-vintage diff conflates revision with rebasing.
+- **OECD response cap 1M observations, URL cap 1,000 chars** — easy to hit with wildcarded long-history sweeps. Adapter must chunk.
+- **MarineTraffic discontinued credit-based pricing January 2025** — old open-source scripts hitting MarineTraffic with stored API keys now silently fail. Use IMF PortWatch (free) instead.
+- **CoinMetrics Community NonCommercial license** is the architectural risk — needs filtering at the API tier layer.
+
+## Notes
+
+- Each loop produces an artifact. No artifact = no completion.
+- When new opportunities surface mid-research, add them to the queue rather than blocking.
+- Prefer concrete, opinionated outputs over surveys-of-options.
+- If stuck on a loop, write a "skipped because" note and move on.

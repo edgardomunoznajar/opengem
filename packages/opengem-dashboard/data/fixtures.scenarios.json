@@ -1,0 +1,47 @@
+[
+  {
+    "slug": "us-recession-2026h2",
+    "name": "US enters mild recession 2026 H2",
+    "description": "Term-spread inversion + softening labor data trigger Bauer-Mertens recession-probability threshold for Q3 2026.",
+    "trigger_summary": "10y-3m spread below -50bp for 8 weeks AND nonfarm payrolls below 80k for 3 prints.",
+    "probability": 0.34,
+    "triggered_at": "2026-06-04T13:22:00Z",
+    "affected_countries": ["USA", "CAN", "MEX"],
+    "affected_indicators": ["gdp_yoy", "unemployment", "policy_rate", "cpi_yoy"],
+    "methodology_url": "https://opengem.org/methodology/us-recession-2026h2",
+    "narrative_block": "Term-structure recession signal has held above 30% for 8 weeks, with payroll deceleration confirming. Historical conditional hit-rate of this configuration is 0.62 since 1985."
+  },
+  {
+    "slug": "eu-energy-shock-winter-2026",
+    "name": "EU winter energy shock",
+    "description": "Gas storage shortfall + supply disruption pushes TTF above €85/MWh for sustained period; CPI passthrough hits euro-area HICP in Q4.",
+    "trigger_summary": "EU gas storage <60% by Oct AND TTF futures curve in contango >€80.",
+    "probability": 0.22,
+    "triggered_at": "2026-06-02T08:11:00Z",
+    "affected_countries": ["DEU", "FRA", "ITA", "NLD", "ESP", "BEL"],
+    "affected_indicators": ["cpi_yoy", "gdp_yoy", "policy_rate"],
+    "methodology_url": "https://opengem.org/methodology/eu-energy-shock"
+  },
+  {
+    "slug": "china-property-double-dip",
+    "name": "China property double-dip",
+    "description": "Property-investment momentum reverses; cross-province credit-impulse stays negative for 6 months.",
+    "trigger_summary": "Real estate investment YoY < -8% for 6 prints AND credit impulse negative.",
+    "probability": 0.41,
+    "triggered_at": "2026-05-28T04:00:00Z",
+    "affected_countries": ["CHN", "AUS", "KOR", "DEU"],
+    "affected_indicators": ["gdp_yoy", "policy_rate", "cpi_yoy"],
+    "methodology_url": "https://opengem.org/methodology/china-property-double-dip"
+  },
+  {
+    "slug": "taiwan-strait-escalation",
+    "name": "Taiwan Strait tensions escalate",
+    "description": "GDELT geopolitical-event density rises above 95th percentile; ACLED protest-event index in region tracks higher.",
+    "trigger_summary": "GDELT GoldsteinScale-weighted event volume in CHN-TWN dyad >95th percentile over rolling 30d.",
+    "probability": 0.18,
+    "triggered_at": "2026-06-05T22:14:00Z",
+    "affected_countries": ["TWN", "CHN", "USA", "JPN", "KOR"],
+    "affected_indicators": ["gpr", "policy_rate"],
+    "methodology_url": "https://opengem.org/methodology/taiwan-strait-escalation"
+  }
+]

@@ -1,0 +1,20 @@
+[project]
+name = "opengem-data-gscpi"
+version = "0.1.0"
+description = "NY Fed Global Supply Chain Pressure Index adapter"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "OPENGEM Maintainers" }]
+dependencies = [
+    "opengem-types>=0.1.0,<0.2.0",
+    "opengem-data-base>=0.1.0,<0.2.0",
+    "httpx>=0.27,<1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/opengem_data_gscpi"]

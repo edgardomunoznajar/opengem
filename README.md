@@ -1,41 +1,117 @@
-# OPENGEM — Open Global Economic Macroeconometric Forecasting System
+# OPENGEM — Open Geopolitical-Economic Modeling
 
-**Program:** OPENGEM-1
-**Block:** I
-**Lifecycle:** Waterfall (DoD-5000 / MIL-STD-498 derived)
-**Status:** Pre-PDR — design phase
-**License:** Apache-2.0 (code) / CC-BY-4.0 (docs, data, model cards)
+**Status**: Block I development — 17 packages, **183 tests passing**, end-to-end Stratfor-grade demo green.
 
-## Mission
+## What this is
 
-Deliver an open-source, continuously verifiable, multi-country macroeconomic forecasting and scenario system at operational parity (≥70% use-case coverage) with proprietary incumbents (Oxford Economics GEM, NIESR NiGEM, Moody's Analytics), at a sustaining cost of <USD 200/month, with statistical performance auditable in public.
+An open-source, model-grounded, reproducibly-tracked **scenario engine** for
+geopolitical-economic analysis. The headline product is a daily digest that
+gets pasted into ChatGPT for analyst-grade prose — producing video-ready
+content for an international-politics YouTuber whose competitive baseline is
+"ChatGPT and nothing else." The longer arc is an open alternative to Stratfor /
+NiGEM / Oxford GEM, validated through that one alpha user before going broader.
 
-## Repository Layout
+## Architectural imperative
+
+Every package is **independently publishable**. Clean contracts at boundaries
+(`opengem-types` is the shared vocabulary). Each package has its own
+`pyproject.toml`, README, tests, can be lifted out and PyPI'd without churn.
+
+## Package roster
+
+### Foundation
+- **opengem-types** ✅ — canonical typed dataclasses (Observation, VintageSnapshot, ScenarioSpec, RunProvenance, …) — 28 tests
+- **opengem-vintage** ✅ — vintage-correct storage primitives (TimescaleDB + SQLite + in-memory) — 6 tests
+- **opengem-data-base** ✅ — Adapter ABC + retry/backoff + error taxonomy — 13 tests
+
+### US upstream-agency adapters (FRED-substitution per ADR-010)
+- **opengem-data-bea** ✅ — Bureau of Economic Analysis (NIPA) — 15 tests
+- **opengem-data-bls** ✅ — Bureau of Labor Statistics (CPI, payrolls, unemployment) — 12 tests
+- **opengem-data-frb** ✅ — Federal Reserve Board (H.15, G.17, H.6) — 9 tests
+- **opengem-data-treasury** ✅ — Treasury FiscalData — 6 tests
+- **opengem-data-census** ✅ — Census M3 / MRTS — 9 tests
+
+### Multi-country adapters
+- **opengem-data-ordra** ✅ — OECD ORDRA SDMX (~130-series catalog auto-generated) — 15 tests
+- **opengem-data-bis** ✅ — BIS CBPOL policy rates (45 central banks) — 9 tests
+
+### Information surface
+- **opengem-data-gscpi** ✅ — NY Fed Global Supply Chain Pressure Index — 5 tests
+- **opengem-data-gpr** ✅ — Caldara-Iacoviello Geopolitical Risk Index (global + 45 country indexes) — 5 tests
+
+### Scenario + Situation engine
+- **opengem-scenarios** ✅ — Canonical library (10 packs) + invocation + JSON serialization — 15 tests
+- **opengem-recession-prob** ✅ — Bauer-Mertens term-spread probit (with IRLS fitter) — 10 tests
+- **opengem-event-detector** ✅ — Market + news event detectors + rule engine → pack triggers — 9 tests
+
+### Friend-facing output
+- **opengem-digest** ✅ — Daily JSON + markdown digest renderer — 6 tests
+- **opengem-narrative** ✅ — ChatGPT system prompts + JSON contract for analyst-grade prose — 6 tests
+
+### Integration tests
+- **tests/integration/** ✅ — vertical slice + Stratfor-grade end-to-end demo — 5 tests
+
+**Total: 17 packages, 183 tests, all green.**
+
+## The friend's morning workflow
+
+1. Overnight: data adapters refresh, event detector scans news + markets, rule engine fires scenario packs.
+2. Morning: friend opens `docs/example-digest.md` (or a similar live file).
+3. Skim situation indicators, events, triggered scenarios.
+4. Pick a scenario, copy the JSON block.
+5. Paste into ChatGPT with the OPENGEM system prompt from `opengem-narrative`.
+6. Get a 3-paragraph video segment grounded in real model output.
+
+See `docs/example-digest.md` for a rendered example with 4 scenarios triggered
+on a morning of high geopolitical tension.
+
+## Architecture
 
 ```
-docs/
-  design/
-    00-program/      Program-level documents (CONOPS, StRS, SRS, SAD, AGP, CMP)
-    10-subsystems/   SSDDs — Subsystem Design Documents
-    20-interfaces/   ICDs — Interface Control Documents
-    30-data/         DBDD — Database Design Document
-    40-vv/           V&V Plan and test specifications
-    50-risk/         Risk Management Plan and register
-    60-schedule/     WBS, master schedule, gate criteria
-    70-cm/           Configuration Management
+                 ┌──────────────── Data adapters ─────────────────┐
+                 │ BEA · BLS · FRB · Treasury · Census · ORDRA · │
+                 │ BIS · GSCPI · GPR · (ECB · IMF · WB pending)  │
+                 └─────────────────────┬─────────────────────────┘
+                                       ▼
+                              opengem-vintage
+                       (TimescaleDB / SQLite store)
+                                       │
+        ┌──────────────────────────────┴───────────────────────────────┐
+        ▼                                                              ▼
+   opengem-recession-prob                                opengem-event-detector
+   (Bauer-Mertens probit)                          (market thresholds + news rules)
+        │                                                              │
+        │                                                              ▼
+        │                                                opengem-scenarios
+        │                                       (10 canonical packs + library)
+        │                                                              │
+        │                                                              ▼
+        │                                                  RuleEngine triggers
+        │                                                ScenarioInvocations
+        ▼                                                              ▼
+                  ┌──────────────── opengem-digest ───────────────┐
+                  │  JSON + markdown daily digest                 │
+                  └──────────────────────┬────────────────────────┘
+                                         ▼
+                              opengem-narrative
+                  (ChatGPT system prompt + NarrativeRequest JSON)
+                                         ▼
+                                friend's ChatGPT
+                                         ▼
+                            analyst-grade YouTube segment
 ```
 
-## Current Phase
+## Running the test suite
 
-Design only. **No implementation code committed at this stage.**
+```bash
+PYTHONPATH=$(find packages -name src -printf '%p:' | sed 's/:$//') \
+  python3 -m pytest packages/ tests/
+```
 
-Per the project charter:
-1. Concept (CONOPS, StRS) → System Requirements Review (SRR)
-2. Requirements (SRS, ICDs) → System Design Review (SDR)
-3. Preliminary Design (SAD, SSDDs) → **Preliminary Design Review (PDR)**
-4. Critical Design (DBDD, frozen ICDs, V&V plan) → CDR
-5. Implementation (post-CDR only)
+## Design dossier
 
-## Entry Point
+The pre-PDR research round produced 28 memos + CONOPS rev C + master design doc v2.0 + LOOP_PLAN v2 — all in `docs/`. Start with [MORNING-BRIEFING.md](MORNING-BRIEFING.md).
 
-Start at [`docs/design/00-program/00-master-design-document-v1.0.md`](docs/design/00-program/00-master-design-document-v1.0.md) — the integrated v1.0 design document set, which links forward to per-subsystem documents as they are realized.
+## License
+
+Apache-2.0 (code) / CC-BY-4.0 (docs, data, model cards).

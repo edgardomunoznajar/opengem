@@ -1,0 +1,62 @@
+"""Tool: list_misses — historical forecast misses with post-mortem URLs."""
+
+from __future__ import annotations
+
+from typing import Any
+
+from opengem_mcp.envelope import envelope
+
+SCHEMA = {
+    "name": "list_misses",
+    "description": (
+        "List forecast misses (outside the 80% band) with their post-mortem URLs. "
+        "Surfaces the editorial discipline of vintage permanence + miss-in-place: "
+        "every miss has a permanent URL the LLM can cite."
+    ),
+    "inputSchema": {
+        "type": "object",
+        "properties": {
+            "indicator": {
+                "type": "string",
+                "description": "Optional indicator filter.",
+            },
+            "country": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 3,
+                "description": "Optional country filter.",
+            },
+            "since": {
+                "type": "string",
+                "description": "Optional vintage date floor YYYY-MM-DD.",
+            },
+            "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 200,
+                "default": 25,
+            },
+        },
+        "required": [],
+    },
+}
+
+
+def call(args: dict[str, Any], client) -> dict[str, Any]:
+    params = {
+        k: v
+        for k, v in {
+            "indicator": args.get("indicator"),
+            "country": args.get("country"),
+            "since": args.get("since"),
+            "limit": args.get("limit", 25),
+        }.items()
+        if v is not None
+    }
+    body = client.get("/v1/misses", params=params)
+    items = body.get("items") or body.get("misses") or []
+    return envelope(
+        payload={"misses": items, "count": len(items)},
+        vintage_id=body.get("as_of") or "current",
+        cite_url="https://opengem.org/accountability",
+    )

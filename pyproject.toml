@@ -1,0 +1,69 @@
+[project]
+name = "opengem-workspace"
+version = "0.0.0"
+description = "OPENGEM monorepo workspace (not published)"
+requires-python = ">=3.12"
+
+[dependency-groups]
+# Test/dev tooling for the whole workspace. `uv sync --all-packages` installs
+# every workspace member editable plus this group.
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+]
+
+[tool.uv.workspace]
+members = ["packages/*"]
+# Non-conforming members: opengem-dashboard is a Node/Next.js package; opengem-api
+# is a bare FastAPI main.py with no Python packaging yet. Both are verified
+# separately (see STATE-OF-REALITY.md, surface section) and excluded from the
+# Python workspace so `uv sync` resolves the 21 packaged members cleanly.
+exclude = ["packages/opengem-dashboard", "packages/opengem-api"]
+
+[tool.uv.sources]
+opengem-types = { workspace = true }
+opengem-vintage = { workspace = true }
+opengem-data-base = { workspace = true }
+opengem-data-bea = { workspace = true }
+opengem-data-bls = { workspace = true }
+opengem-data-frb = { workspace = true }
+opengem-data-treasury = { workspace = true }
+opengem-data-census = { workspace = true }
+opengem-data-ordra = { workspace = true }
+opengem-data-bis = { workspace = true }
+opengem-data-gscpi = { workspace = true }
+opengem-data-gpr = { workspace = true }
+opengem-data-polecat = { workspace = true }
+opengem-scenarios = { workspace = true }
+opengem-recession-prob = { workspace = true }
+opengem-event-detector = { workspace = true }
+opengem-digest = { workspace = true }
+opengem-narrative = { workspace = true }
+opengem-l3-dfm = { workspace = true }
+opengem-datasette = { workspace = true }
+opengem-mcp = { workspace = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"]  # handled by formatter
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+pythonpath = "."
+testpaths = ["packages/*/tests", "tests"]
+addopts = "--import-mode=importlib"
+markers = [
+    "integration: requires live external API",
+    "slow: takes more than a few seconds",
+]
