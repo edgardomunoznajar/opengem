@@ -10,7 +10,7 @@ const SECTIONS = [
     body: `Every forecast is scored against truth using CRPS, log-score, PIT, MAE, RMSE, and hit-rate. Diebold-Mariano tests compare against an AR(1) baseline. The leaderboard is sorted by CRPS, with PIT calibration shown as a secondary column. A 17-cell V&V matrix (country × indicator × horizon) is the publication gate.`,
   },
   {
-    h: "What "publishes its mistakes" means",
+    h: 'What "publishes its mistakes" means',
     body: `Every forecast vintage is permanent. When a forecast misses, a post-mortem appears at the same URL, dated, signed, and linked to the original forecast. The miss-log is paginated and searchable. There is no quiet retract.`,
   },
   {

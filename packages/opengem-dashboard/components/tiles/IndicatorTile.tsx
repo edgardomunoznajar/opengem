@@ -26,16 +26,12 @@ export function IndicatorTile({
   className,
 }: IndicatorTileProps) {
   const dir = deltaSign(delta);
-  const Wrap = href ? Link : ("div" as const);
-  const wrapProps = href ? { href } : {};
-  return (
-    <Wrap
-      {...wrapProps}
-      className={cn(
-        "tile group relative block hover:border-line-strong",
-        className
-      )}
-    >
+  const wrapClassName = cn(
+    "tile group relative block hover:border-line-strong",
+    className
+  );
+  const inner = (
+    <>
       <div className="flex items-start justify-between gap-2">
         <div className="tile-h">{label}</div>
         {badge && <span className="pill-info">{badge}</span>}
@@ -70,6 +66,13 @@ export function IndicatorTile({
       {asOf && (
         <div className="mt-1 text-2xs text-ink-subtle">as of {asOf}</div>
       )}
-    </Wrap>
+    </>
+  );
+  return href ? (
+    <Link href={href} className={wrapClassName}>
+      {inner}
+    </Link>
+  ) : (
+    <div className={wrapClassName}>{inner}</div>
   );
 }
