@@ -1,18 +1,17 @@
 [project]
-name = "opengem-l3-dfm"
+name = "opengem-backtest"
 version = "0.1.0"
-description = "OPENGEM L3 forecast backbone — DynamicFactorMQ wrapper from statsmodels (Bok et al. NY Fed Nowcasting framework)"
+description = "OPENGEM backtest & scoring (SSDD-007 slice) — rolling-origin replay, CRPS/MAE, AR(1)/random-walk baselines, leaderboard rows"
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "Apache-2.0" }
 authors = [{ name = "OPENGEM Maintainers" }]
 dependencies = [
     "opengem-types>=0.1.0,<0.2.0",
-    "opengem-vintage>=0.1.0,<0.2.0",
     "opengem-panel>=0.1.0,<0.2.0",
+    "opengem-l3-dfm>=0.1.0,<0.2.0",
     "numpy>=1.26,<3.0",
     "pandas>=2.1,<3.0",
-    "statsmodels>=0.14,<1.0",
     "scipy>=1.11,<2.0",
 ]
 
@@ -21,9 +20,12 @@ test = [
     "pytest>=8.0",
 ]
 
+[project.scripts]
+opengem-backtest = "opengem_backtest.cli:main"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/opengem_l3_dfm"]
+packages = ["src/opengem_backtest"]

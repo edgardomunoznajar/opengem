@@ -43,6 +43,8 @@ opengem-narrative = { workspace = true }
 opengem-l3-dfm = { workspace = true }
 opengem-datasette = { workspace = true }
 opengem-mcp = { workspace = true }
+opengem-panel = { workspace = true }
+opengem-backtest = { workspace = true }
 
 [tool.ruff]
 line-length = 100

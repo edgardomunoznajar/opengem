@@ -25,6 +25,7 @@ from dataclasses import asdict
 from datetime import date
 from typing import TYPE_CHECKING, Any
 
+from opengem_panel import US_GDP_CPI_SPEC, build_panel
 from opengem_types import (
     Country,
     DensityForecast,
@@ -196,9 +197,9 @@ def fit_us_gdp(
 
     Parameters
     ----------
-    store : opengem_vintage.VintageStore-shaped object
-        Anything with a ``load_panel(country, codes, vintage)`` method that
-        returns a pandas DataFrame keyed by quarter and columned by series code.
+    store : opengem_vintage.VintageStore
+        The vintage store. We take an as-of view at ``vintage_date`` and assemble
+        the US GDP/CPI quarterly panel from it via ``opengem_panel.build_panel``.
     vintage_date : str
         ISO-8601 vintage date string, e.g. "2026-06-06".
 
@@ -210,22 +211,12 @@ def fit_us_gdp(
     cfg = DFMConfig(
         country="US",
         target="gdp_yoy",
-        factors=2,
+        factors=1,
         factor_order=1,
         horizons_q=(1, 4, 8, 20),
-        series_codes=(
-            "gdp_yoy",
-            "cpi_yoy",
-            "unemployment",
-            "industrial_production_yoy",
-            "retail_sales_yoy",
-        ),
     )
-    panel = store.load_panel(
-        country=cfg.country,
-        codes=cfg.series_codes,
-        vintage=vintage_date,
-    )
+    view = store.at(date.fromisoformat(vintage_date))
+    panel = build_panel(view, US_GDP_CPI_SPEC)
     base_period = _last_period(panel)
     return fit_dfm(panel, cfg, base_period)
 

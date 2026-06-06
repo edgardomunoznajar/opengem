@@ -4,6 +4,7 @@ requires-python = ">=3.12"
 
 [manifest]
 members = [
+    "opengem-backtest",
     "opengem-data-base",
     "opengem-data-bea",
     "opengem-data-bis",
@@ -21,6 +22,7 @@ members = [
     "opengem-l3-dfm",
     "opengem-mcp",
     "opengem-narrative",
+    "opengem-panel",
     "opengem-recession-prob",
     "opengem-scenarios",
     "opengem-types",
@@ -478,6 +480,36 @@ wheels = [
 ]
 
 [[package]]
+name = "opengem-backtest"
+version = "0.1.0"
+source = { editable = "packages/opengem-backtest" }
+dependencies = [
+    { name = "numpy" },
+    { name = "opengem-l3-dfm" },
+    { name = "opengem-panel" },
+    { name = "opengem-types" },
+    { name = "pandas" },
+    { name = "scipy" },
+]
+
+[package.optional-dependencies]
+test = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "numpy", specifier = ">=1.26,<3.0" },
+    { name = "opengem-l3-dfm", editable = "packages/opengem-l3-dfm" },
+    { name = "opengem-panel", editable = "packages/opengem-panel" },
+    { name = "opengem-types", editable = "packages/opengem-types" },
+    { name = "pandas", specifier = ">=2.1,<3.0" },
+    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0" },
+    { name = "scipy", specifier = ">=1.11,<2.0" },
+]
+provides-extras = ["test"]
+
+[[package]]
 name = "opengem-data-base"
 version = "0.1.0"
 source = { editable = "packages/opengem-data-base" }
@@ -727,6 +759,7 @@ version = "0.1.0"
 source = { editable = "packages/opengem-l3-dfm" }
 dependencies = [
     { name = "numpy" },
+    { name = "opengem-panel" },
     { name = "opengem-types" },
     { name = "opengem-vintage" },
     { name = "pandas" },
@@ -742,6 +775,7 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "numpy", specifier = ">=1.26,<3.0" },
+    { name = "opengem-panel", editable = "packages/opengem-panel" },
     { name = "opengem-types", editable = "packages/opengem-types" },
     { name = "opengem-vintage", editable = "packages/opengem-vintage" },
     { name = "pandas", specifier = ">=2.1,<3.0" },
@@ -791,6 +825,30 @@ requires-dist = [
     { name = "opengem-scenarios", editable = "packages/opengem-scenarios" },
     { name = "opengem-types", editable = "packages/opengem-types" },
 ]
+
+[[package]]
+name = "opengem-panel"
+version = "0.1.0"
+source = { editable = "packages/opengem-panel" }
+dependencies = [
+    { name = "opengem-types" },
+    { name = "opengem-vintage" },
+    { name = "pandas" },
+]
+
+[package.optional-dependencies]
+test = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "opengem-types", editable = "packages/opengem-types" },
+    { name = "opengem-vintage", editable = "packages/opengem-vintage" },
+    { name = "pandas", specifier = ">=2.1,<3.0" },
+    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0" },
+]
+provides-extras = ["test"]
 
 [[package]]
 name = "opengem-recession-prob"
