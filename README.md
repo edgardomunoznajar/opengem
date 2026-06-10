@@ -1,6 +1,28 @@
 # OPENGEM — Open Geopolitical-Economic Modeling
 
+[![CI](https://github.com/edgardomunoznajar/opengem/actions/workflows/ci.yml/badge.svg)](https://github.com/edgardomunoznajar/opengem/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 **Status**: Block I — v2.0 baseline accepted (see [SIGNOFF.md](SIGNOFF.md)). **23 Python packages, 267 tests passing, ruff-clean, CI green.** First **real, scored** US forecast is live: the L3 DFM beats AR(1) and random-walk on GDP-1Q by CRPS on real 1960–2026 data ([docs/first-us-forecast.json](docs/first-us-forecast.json)). For the honest real-vs-stub breakdown, read **[STATE-OF-REALITY.md](STATE-OF-REALITY.md)** — not the per-package counts below, which are approximate.
+
+## Public forecast track record
+
+This project's product is an **accountable, ex-ante forecast record** — dated
+density forecasts committed publicly *before* the official data they predict
+is released, scored against named baselines, with misses kept up forever.
+The record and its fixed rules live in [`forecasts/`](forecasts/README.md).
+
+Current open forecasts (published 2026-06-06):
+
+| Target | Period | p50 | [p10, p90] | Resolves |
+|---|---|---|---|---|
+| US GDP yoy | 2026Q2 | **2.67%** | [0.87, 4.47] | ~2026-07-30 |
+| US CPI yoy | 2026Q2 | **2.74%** | [1.80, 3.69] | ~2026-07-14 |
+
+At publication, the model beat both baselines on the headline backtest cell
+(GDP-1Q mean CRPS: DFM 1.380 < AR(1) 1.553 < RW 1.717; 24 rolling origins on
+real 1960–2026 data), with an honest mix on the other cells — details in
+[`forecasts/README.md`](forecasts/README.md).
 
 ## What this is
 
