@@ -22,7 +22,7 @@ reproducible from a fresh checkout.
 | Test cases passing | **267 / 267** | `pytest` (245 at Goal A baseline; +22 from Goal B's panel + backtest) |
 | Python workspace packages | **23** | 21 at baseline + `opengem-panel` + `opengem-backtest` (Goal B) |
 | Lint | **clean** | `ruff check .` passes (shipped code; research-300 excluded) |
-| CI | **authored + locally validated** | `.github/workflows/ci.yml`; pushed to GitHub 2026-06-10 (Goal C) — first Actions run pending verification |
+| CI | **green on GitHub** | `.github/workflows/ci.yml`; first successful Actions run 2026-06-10 (Goal C): uv sync --frozen → ruff → 267 tests, public repo |
 
 ### The README's "183 tests" claim — reconciled
 
